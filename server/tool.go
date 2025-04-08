@@ -66,9 +66,10 @@ func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *Tool
 
 func (p *ToolApp) initTool(name string, clone func() any) {
 	defer func() {
-		e := recover()
-		if e, ok := e.(stop); !ok {
-			panic(e)
+		if e := recover(); e != nil {
+			if _, ok := e.(stop); !ok {
+				panic(e)
+			}
 		}
 	}()
 	p.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
