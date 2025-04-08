@@ -1,0 +1,14 @@
+tool => {
+	description "Say hello to someone"
+	string "name", => {
+		required
+		description "Name of the person to greet"
+	}
+}
+
+name, ok := ${name}.(string)
+if !ok {
+	panic "name must be a string"
+}
+
+return text("Hello, ${name}!")
