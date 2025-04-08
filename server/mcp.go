@@ -49,16 +49,22 @@ func (p *MCPApp) Server(name, version string) {
 	p.serve = serveStdio
 }
 
+const (
+	serveStdioMsg = "Serving MCP server with stdio ..."
+)
+
 // ServeStdio is a convenience function that creates and starts a StdioServer with os.Stdin and os.Stdout.
 // It sets up signal handling for graceful shutdown on SIGTERM and SIGINT.
 // Returns an error if the server encounters any issues during operation.
 func (p *MCPApp) ServeStdio() {
 	p.serve = func(svr *server.MCPServer) error {
+		log.Println(serveStdioMsg)
 		return server.ServeStdio(svr)
 	}
 }
 
 func serveStdio(svr *server.MCPServer) error {
+	log.Println(serveStdioMsg)
 	return server.ServeStdio(svr)
 }
 
