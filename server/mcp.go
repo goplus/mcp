@@ -21,8 +21,11 @@ import (
 	"log"
 	"reflect"
 
+	"github.com/goplus/mcp/server/svx"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
+
+	_ "github.com/goplus/mcp/server/stdio"
 )
 
 const (
@@ -31,50 +34,40 @@ const (
 
 // -----------------------------------------------------------------------------
 
-type fServe func(*server.MCPServer) error
-
 // MCPApp is the project class of a MCPServer classfile.
 type MCPApp struct {
-	svr   *server.MCPServer
-	serve fServe
+	svr  *server.MCPServer
+	addr string
 }
 
-func (p *MCPApp) serverAndServe() (*server.MCPServer, fServe) {
-	return p.svr, p.serve
+func (p *MCPApp) mcpServer() *server.MCPServer {
+	return p.svr
 }
 
 // Server creates a new MCP server instance with the given name and version.
 func (p *MCPApp) Server(name, version string) {
 	p.svr = server.NewMCPServer(name, version)
-	p.serve = serveStdio
+	p.addr = "stdio:"
 }
 
-const (
-	serveStdioMsg = "Serving MCP server with stdio ..."
-)
-
-// ServeStdio is a convenience function that creates and starts a StdioServer with os.Stdin and os.Stdout.
-// It sets up signal handling for graceful shutdown on SIGTERM and SIGINT.
-// Returns an error if the server encounters any issues during operation.
-func (p *MCPApp) ServeStdio() {
-	p.serve = func(svr *server.MCPServer) error {
-		log.Println(serveStdioMsg)
-		return server.ServeStdio(svr)
-	}
+// Run sets the MCP server address.
+func (p *MCPApp) Run(addr string) {
+	p.addr = addr
 }
 
-func serveStdio(svr *server.MCPServer) error {
-	log.Println(serveStdioMsg)
-	return server.ServeStdio(svr)
+func (p *MCPApp) serve() error {
+	return svx.ListenAndServe(p.addr, p.svr)
 }
 
 // -----------------------------------------------------------------------------
 
 var _ = (*ToolApp).addTo
-var _ = (*MCPApp).serverAndServe
+var _ = (*MCPApp).mcpServer
+var _ = (*MCPApp).serve
 
 type iAppProto interface {
-	serverAndServe() (*server.MCPServer, fServe)
+	mcpServer() *server.MCPServer
+	serve() error
 	MainEntry()
 }
 
@@ -88,12 +81,12 @@ type iHandlerProto interface {
 // Gopt_MCPApp_Main is required by Go+ compiler as the entry of a MCPServer project.
 func Gopt_MCPApp_Main(app iAppProto, handlers ...iHandlerProto) {
 	app.MainEntry()
-	svr, serve := app.serverAndServe()
+	svr := app.mcpServer()
 	for _, h := range handlers {
 		reflect.ValueOf(h).Elem().Field(1).Set(reflect.ValueOf(app)) // (*handler).App = app
 		h.addTo(h, svr)
 	}
-	err := serve(svr)
+	err := app.serve()
 	if err != nil {
 		log.Panicln(err)
 	}

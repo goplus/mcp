@@ -34,9 +34,8 @@ func Text(text string) *mcp.CallToolResult {
 type stop struct{}
 
 type ToolAppProto struct {
-	tool  mcp.Tool
-	clone func() any
-	opts  []mcp.PropertyOption
+	tool mcp.Tool
+	opts []mcp.PropertyOption
 }
 
 // ToolApp is a worker class of a MCPServer classfile.
@@ -64,7 +63,7 @@ func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *Tool
 	return nil
 }
 
-func (p *ToolApp) initTool(name string, clone func() any) {
+func (p *ToolApp) initTool(name string) {
 	defer func() {
 		if e := recover(); e != nil {
 			if _, ok := e.(stop); !ok {
@@ -73,8 +72,7 @@ func (p *ToolApp) initTool(name string, clone func() any) {
 		}
 	}()
 	p.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
-		tool:  mcp.NewTool(name),
-		clone: clone,
+		tool: mcp.NewTool(name),
 	})
 }
 
@@ -121,7 +119,7 @@ func (p *ToolApp) Required() {
 
 func (p *ToolApp) addTo(self iHandlerProto, svr *server.MCPServer) {
 	clone := self.Classclone
-	p.initTool(self.Classfname(), clone)
+	p.initTool(self.Classfname())
 	svr.AddTool(p.tool, func(ctx context.Context, request mcp.CallToolRequest) (ret *mcp.CallToolResult, err error) {
 		defer func() {
 			if e := recover(); e != nil {
