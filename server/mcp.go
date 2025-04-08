@@ -74,7 +74,7 @@ type iAppProto interface {
 
 type iHandlerProto interface {
 	addTo(self iHandlerProto, svr *server.MCPServer)
-	Main(ctx context.Context, request mcp.CallToolRequest, t *ToolType) *mcp.CallToolResult
+	Main(ctx context.Context, request mcp.CallToolRequest, t *ToolAppProto) *mcp.CallToolResult
 	Classfname() string
 	Classclone() any
 }
