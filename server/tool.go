@@ -33,31 +33,33 @@ func Text(text string) *mcp.CallToolResult {
 
 type stop struct{}
 
-type ToolType struct {
+type ToolAppProto struct {
 	tool  mcp.Tool
 	clone func() any
+	opts  []mcp.PropertyOption
 }
 
 // ToolApp is a worker class of a MCPServer classfile.
 type ToolApp struct {
-	*ToolType
+	*ToolAppProto
 	ctx     context.Context
 	request mcp.CallToolRequest
 	isClone bool
 }
 
+// Gop_Env returns the value of the specified parameter.
 func (p *ToolApp) Gop_Env(name string) any {
-	panic("todo")
+	return p.request.Params.Arguments[name]
 }
 
 // Main is required by Go+ compiler as the entry of a MCPServer tool.
-func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *ToolType) *mcp.CallToolResult {
+func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *ToolAppProto) *mcp.CallToolResult {
 	if t == nil {
 		p.ctx = ctx
 		p.request = request
 		p.isClone = true
 	} else {
-		p.ToolType = t
+		p.ToolAppProto = t
 	}
 	return nil
 }
@@ -69,14 +71,13 @@ func (p *ToolApp) initTool(name string, clone func() any) {
 			panic(e)
 		}
 	}()
-	p.Main(context.TODO(), mcp.CallToolRequest{}, &ToolType{
-		tool: mcp.Tool{
-			Name: name,
-		},
+	p.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
+		tool:  mcp.NewTool(name),
 		clone: clone,
 	})
 }
 
+// Tool calls fn to initialize the tool.
 func (p *ToolApp) Tool(fn func()) {
 	if !p.isClone {
 		fn()
@@ -84,19 +85,37 @@ func (p *ToolApp) Tool(fn func()) {
 	}
 }
 
+// For a tool:
 // Description sets a description to the Tool.
 // The description should provide a clear, human-readable explanation of
 // what the tool does.
+//
+// For a tool property:
+// Description adds a description to a property in the JSON Schema.
+// The description should explain the purpose and expected values of the property.
 func (p *ToolApp) Description(description string) {
-	p.tool.Description = description
+	if p.opts != nil {
+		p.opts = append(p.opts, mcp.Description(description))
+	} else {
+		mcp.WithDescription(description)(&p.tool)
+	}
 }
 
-func (p *ToolApp) String(name string, fn func()) {
-	panic("todo")
+// String adds a string property to the tool schema.
+// It accepts property options to configure the string property's behavior and constraints.
+func (p *ToolApp) String(name string, fn ...func()) {
+	if len(fn) > 0 {
+		p.opts = make([]mcp.PropertyOption, 0, 2)
+		fn[0]()
+	}
+	mcp.WithString(name, p.opts...)(&p.tool)
+	p.opts = nil
 }
 
+// Required marks a property as required in the tool's input schema.
+// Required properties must be provided when using the tool.
 func (p *ToolApp) Required() {
-	panic("todo")
+	p.opts = append(p.opts, mcp.Required())
 }
 
 func (p *ToolApp) addTo(self iHandlerProto, svr *server.MCPServer) {

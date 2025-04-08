@@ -27,7 +27,7 @@ func (this *MCPApp) Main() {
 	server.Gopt_MCPApp_Main(this, new(hello_world))
 }
 //line demo/hello/hello_world_tool.gox:1
-func (this *hello_world) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolType) *mcp.CallToolResult {
+func (this *hello_world) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/hello/hello_world_tool.gox:1:1
 	this.Tool(func() {
