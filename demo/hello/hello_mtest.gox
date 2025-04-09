@@ -1,0 +1,4 @@
+testServer new(MCPApp)
+
+initialize nil
+echo resp
