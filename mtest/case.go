@@ -20,6 +20,9 @@ import (
 	"context"
 	"testing"
 
+	"maps"
+
+	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/qiniu/x/test"
 )
 
@@ -43,6 +46,23 @@ func (p *CaseApp) Req__0(method string) *Request {
 // Req returns current request object.
 func (p *CaseApp) Req__1() *Request {
 	return p.Request
+}
+
+// OnNotify registers a notification handler.
+func (p *CaseApp) OnNotify(notify func(method string, params map[string]any)) {
+	p.client.OnNotification(func(in mcp.JSONRPCNotification) {
+		notify(in.Method, makeParams(in.Params))
+	})
+}
+
+func makeParams(in mcp.NotificationParams) map[string]any {
+	if in.Meta == nil {
+		return in.AdditionalFields
+	}
+	m := make(map[string]any, len(in.AdditionalFields)+1)
+	maps.Copy(m, in.AdditionalFields)
+	m["_meta"] = in.Meta
+	return m
 }
 
 // -----------------------------------------------------------------------------
