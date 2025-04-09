@@ -18,9 +18,8 @@ package mtest
 
 import (
 	"context"
-	"testing"
-
 	"maps"
+	"testing"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/qiniu/x/test"
