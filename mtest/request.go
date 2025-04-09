@@ -79,14 +79,16 @@ func (p *Request) Send() *Request {
 	return p
 }
 
+type jsonrpcRequest struct {
+	Method string         `json:"method"`
+	Params map[string]any `json:"params,omitempty"`
+}
+
 func (p *Request) doSend() (ret map[string]any, err error) {
 	app := p.ctx
 	c := app.client
 	if fn, ok := routes[p.method]; ok {
-		req, e := json.Marshal(map[string]any{
-			"method": p.method,
-			"params": p.params,
-		})
+		req, e := json.Marshal(jsonrpcRequest{p.method, p.params})
 		if e != nil {
 			return nil, e
 		}
@@ -111,6 +113,86 @@ var routes = map[string]func(c *client.SSEMCPClient, ctx context.Context, req []
 			return nil, err
 		}
 		return c.Initialize(ctx, in)
+	},
+	"ping": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		return nil, c.Ping(ctx)
+	},
+	"resources/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.ListResourcesRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.ListResources(ctx, in)
+	},
+	"resources/templates/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.ListResourceTemplatesRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.ListResourceTemplates(ctx, in)
+	},
+	"resources/read": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.ReadResourceRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.ReadResource(ctx, in)
+	},
+	"resources/subscribe": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.SubscribeRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return nil, c.Subscribe(ctx, in)
+	},
+	"resources/unsubscribe": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.UnsubscribeRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return nil, c.Unsubscribe(ctx, in)
+	},
+	"prompts/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.ListPromptsRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.ListPrompts(ctx, in)
+	},
+	"prompts/get": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.GetPromptRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.GetPrompt(ctx, in)
+	},
+	"tools/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.ListToolsRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.ListTools(ctx, in)
+	},
+	"tools/call": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.CallToolRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.CallTool(ctx, in)
+	},
+	"logging/setLevel": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.SetLevelRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return nil, c.SetLevel(ctx, in)
+	},
+	"completion/complete": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+		var in mcp.CompleteRequest
+		if err := json.Unmarshal(req, &in); err != nil {
+			return nil, err
+		}
+		return c.Complete(ctx, in)
 	},
 }
 
