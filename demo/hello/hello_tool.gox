@@ -1,4 +1,4 @@
-tool => {
+tool "hello_world", => {
 	description "Say hello to someone"
 	string "name", => {
 		required
