@@ -1,0 +1,19 @@
+tool "mul", => {
+	description "Multiply two numbers"
+	float "x", => {
+		required
+		description "One of multiplicative parameters"
+	}
+	float "y", => {
+		required
+		description "One of multiplicative parameters"
+	}
+}
+
+x, ok1 := ${x}.(float64)
+y, ok2 := ${y}.(float64)
+if !ok1 || !ok2 {
+	panic "multiplicative parameters x and y must be numbers"
+}
+
+return number(x * y)
