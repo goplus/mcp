@@ -28,16 +28,37 @@ import (
 type CaseT = test.CaseT
 
 type CaseApp struct {
-	test.Case
+	*Request
 	*App
+	test.Case
 	ctx context.Context
 }
 
+// Req create a new request given method.
+func (p *CaseApp) Req__0(method string) *Request {
+	p.Request = &Request{method: method, ctx: p}
+	return p.Request
+}
+
+// Req returns current request object.
+func (p *CaseApp) Req__1() *Request {
+	return p.Request
+}
+
+// -----------------------------------------------------------------------------
+
+var _ = (*CaseApp).initCaseApp
+
+type iCaseProto interface {
+	initCaseApp(*App, CaseT)
+	Main()
+}
+
 // Gopt_CaseApp_TestMain is required by Go+ compiler as the entry of a YAP test case.
-func Gopt_CaseApp_TestMain(c interface{ initCaseApp(*App, CaseT) }, t *testing.T) {
+func Gopt_CaseApp_TestMain(c iCaseProto, t *testing.T) {
 	app := new(App).initApp()
 	c.initCaseApp(app, test.NewT(t))
-	c.(interface{ Main() }).Main()
+	c.Main()
 }
 
 func (p *CaseApp) initCaseApp(app *App, t CaseT) {
