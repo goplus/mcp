@@ -11,7 +11,7 @@ import (
 
 const _ = true
 
-type hello_world struct {
+type hello struct {
 	server.ToolApp
 	*MCPApp
 }
@@ -24,41 +24,38 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, new(hello_world))
+	server.Gopt_MCPApp_Main(this, new(hello))
 }
-//line demo/hello/hello_world_tool.gox:1
-func (this *hello_world) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
+//line demo/hello/hello_tool.gox:1
+func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
-//line demo/hello/hello_world_tool.gox:1:1
-	this.Tool(func() {
-//line demo/hello/hello_world_tool.gox:2:1
+//line demo/hello/hello_tool.gox:1:1
+	this.Tool("hello_world", func() {
+//line demo/hello/hello_tool.gox:2:1
 		this.Description("Say hello to someone")
-//line demo/hello/hello_world_tool.gox:3:1
+//line demo/hello/hello_tool.gox:3:1
 		this.String("name", func() {
-//line demo/hello/hello_world_tool.gox:4:1
+//line demo/hello/hello_tool.gox:4:1
 			this.Required()
-//line demo/hello/hello_world_tool.gox:5:1
+//line demo/hello/hello_tool.gox:5:1
 			this.Description("Name of the person to greet")
 		})
 	})
-//line demo/hello/hello_world_tool.gox:9:1
+//line demo/hello/hello_tool.gox:9:1
 	name, ok := this.Gop_Env("name").(string)
-//line demo/hello/hello_world_tool.gox:10:1
+//line demo/hello/hello_tool.gox:10:1
 	if !ok {
-//line demo/hello/hello_world_tool.gox:11:1
+//line demo/hello/hello_tool.gox:11:1
 		panic("name must be a string")
 	}
-//line demo/hello/hello_world_tool.gox:14:1
+//line demo/hello/hello_tool.gox:14:1
 	return server.Text(stringutil.Concat("Hello, ", name, "!"))
 }
-func (this *hello_world) Classfname() string {
-	return "hello_world"
-}
-func (this *hello_world) Classclone() any {
+func (this *hello) Classclone() any {
 	_gop_ret := *this
 	return &_gop_ret
 }
 func main() {
-//line demo/hello/hello_world_tool.gox:14:1
+//line demo/hello/hello_tool.gox:14:1
 	new(MCPApp).Main()
 }

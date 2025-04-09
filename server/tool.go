@@ -63,7 +63,7 @@ func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *Tool
 	return nil
 }
 
-func (p *ToolApp) initTool(name string) {
+func (p *ToolApp) initToolApp() {
 	defer func() {
 		if e := recover(); e != nil {
 			if _, ok := e.(stop); !ok {
@@ -72,13 +72,14 @@ func (p *ToolApp) initTool(name string) {
 		}
 	}()
 	p.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
-		tool: mcp.NewTool(name),
+		tool: mcp.NewTool(""),
 	})
 }
 
 // Tool calls fn to initialize the tool.
-func (p *ToolApp) Tool(fn func()) {
+func (p *ToolApp) Tool(name string, fn func()) {
 	if !p.isClone {
+		p.tool.Name = name
 		fn()
 		panic(stop{})
 	}
@@ -119,7 +120,7 @@ func (p *ToolApp) Required() {
 
 func (p *ToolApp) addTo(self iHandlerProto, svr *server.MCPServer) {
 	clone := self.Classclone
-	p.initTool(self.Classfname())
+	p.initToolApp()
 	svr.AddTool(p.tool, func(ctx context.Context, request mcp.CallToolRequest) (ret *mcp.CallToolResult, err error) {
 		defer func() {
 			if e := recover(); e != nil {
