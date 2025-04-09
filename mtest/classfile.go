@@ -17,8 +17,12 @@
 package mtest
 
 import (
+	"context"
 	"os"
 	"testing"
+
+	"github.com/mark3labs/mcp-go/client"
+	"github.com/mark3labs/mcp-go/server"
 )
 
 const (
@@ -43,10 +47,33 @@ func Gopt_MainApp_TestMain(app any, m *testing.M) {
 
 // App is the application for MCP Server testing.
 type App struct {
+	client  *client.SSEMCPClient
+	baseURL string
 }
 
 func (p *App) initApp() *App {
 	return p
+}
+
+// MCPAppType represents the interface of a MCP Server application.
+type MCPAppType interface {
+	SetLAS(las func(addr string, svr *server.MCPServer) error)
+	Main()
+}
+
+// TestServer runs a MCP server by httptest.Server.
+func (p *App) TestServer(app MCPAppType) {
+	app.SetLAS(func(addr string, svr *server.MCPServer) (err error) {
+		ts := server.NewTestServer(svr)
+		p.baseURL = ts.URL
+		p.client, err = client.NewSSEMCPClient(ts.URL)
+		if err != nil {
+			return
+		}
+		err = p.client.Start(context.Background())
+		return
+	})
+	app.Main()
 }
 
 // -----------------------------------------------------------------------------

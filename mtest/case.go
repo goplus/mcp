@@ -17,6 +17,7 @@
 package mtest
 
 import (
+	"context"
 	"testing"
 
 	"github.com/qiniu/x/test"
@@ -29,6 +30,7 @@ type CaseT = test.CaseT
 type CaseApp struct {
 	test.Case
 	*App
+	ctx context.Context
 }
 
 // Gopt_CaseApp_TestMain is required by Go+ compiler as the entry of a YAP test case.
@@ -41,6 +43,7 @@ func Gopt_CaseApp_TestMain(c interface{ initCaseApp(*App, CaseT) }, t *testing.T
 func (p *CaseApp) initCaseApp(app *App, t CaseT) {
 	p.App = app
 	p.CaseT = t
+	p.ctx = context.TODO()
 }
 
 // -----------------------------------------------------------------------------

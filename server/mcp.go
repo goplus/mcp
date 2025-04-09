@@ -50,8 +50,10 @@ func (p *MCPApp) Sys() *server.MCPServer {
 // Server creates a new MCP server instance with the given name and version.
 func (p *MCPApp) Server(name, version string) {
 	p.svr = server.NewMCPServer(name, version)
-	p.las = svx.ListenAndServe
 	p.addr = "stdio:"
+	if p.las == nil {
+		p.las = svx.ListenAndServe
+	}
 }
 
 // Run sets the MCP server address.
