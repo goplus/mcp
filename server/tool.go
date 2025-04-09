@@ -45,6 +45,18 @@ func Number__2(val float64, fmt byte, prec int) *mcp.CallToolResult {
 	return mcp.NewToolResultText(strconv.FormatFloat(val, fmt, prec, 64))
 }
 
+/*
+// Image creates a new CallToolResult with an image content
+func Image(text, imageData, mimeType string) *mcp.CallToolResult {
+	return mcp.NewToolResultImage(text, imageData, mimeType)
+}
+
+// Resource creates a new CallToolResult with a resource content
+func Resource(text string, resource mcp.ResourceContents) *mcp.CallToolResult {
+	return mcp.NewToolResultResource(text, resource)
+}
+*/
+
 // -----------------------------------------------------------------------------
 
 type stop struct{}
@@ -138,6 +150,42 @@ func (p *ToolApp) Float(name string, fn ...func()) {
 		fn[0]()
 	}
 	mcp.WithNumber(name, p.opts...)(&p.tool)
+	p.opts = nil
+}
+
+// Bool adds a boolean property to the tool schema.
+// It accepts property options to configure the boolean property's behavior
+// and constraints.
+func (p *ToolApp) Bool(name string, fn ...func()) {
+	if len(fn) > 0 {
+		p.opts = make([]mcp.PropertyOption, 0, 2)
+		fn[0]()
+	}
+	mcp.WithBoolean(name, p.opts...)(&p.tool)
+	p.opts = nil
+}
+
+// List adds an array property to the tool schema.
+// It accepts property options to configure the array property's behavior
+// and constraints.
+func (p *ToolApp) List(name string, fn ...func()) {
+	if len(fn) > 0 {
+		p.opts = make([]mcp.PropertyOption, 0, 2)
+		fn[0]()
+	}
+	mcp.WithArray(name, p.opts...)(&p.tool)
+	p.opts = nil
+}
+
+// Object adds an object property to the tool schema.
+// It accepts property options to configure the object property's behavior
+// and constraints.
+func (p *ToolApp) Object(name string, fn ...func()) {
+	if len(fn) > 0 {
+		p.opts = make([]mcp.PropertyOption, 0, 2)
+		fn[0]()
+	}
+	mcp.WithObject(name, p.opts...)(&p.tool)
 	p.opts = nil
 }
 
