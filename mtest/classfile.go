@@ -18,6 +18,7 @@ package mtest
 
 import (
 	"context"
+	"log"
 	"os"
 	"testing"
 
@@ -55,6 +56,13 @@ func (p *App) initApp() *App {
 	return p
 }
 
+func (p *App) shutdown() {
+	if p.client != nil {
+		p.client.Close()
+		p.client = nil
+	}
+}
+
 // MCPAppType represents the interface of a MCP Server application.
 type MCPAppType interface {
 	SetLAS(las func(addr string, svr *server.MCPServer) error)
@@ -62,15 +70,25 @@ type MCPAppType interface {
 }
 
 // TestServer runs a MCP server by httptest.Server.
-func (p *App) TestServer(app MCPAppType) {
+func (p *App) TestServer__0(app MCPAppType) {
+	p.TestServer__1("/sse", app)
+}
+
+// TestServer runs a MCP server by httptest.Server.
+func (p *App) TestServer__1(path string, app MCPAppType) {
 	app.SetLAS(func(addr string, svr *server.MCPServer) (err error) {
 		ts := server.NewTestServer(svr)
-		p.baseURL = ts.URL
-		p.client, err = client.NewSSEMCPClient(ts.URL)
+		log.Println("Serving MCP server at", ts.URL)
+		p.baseURL = ts.URL + path
+		p.client, err = client.NewSSEMCPClient(p.baseURL)
 		if err != nil {
+			log.Println("NewSSEMCPClient:", err)
 			return
 		}
 		err = p.client.Start(context.Background())
+		if err != nil {
+			log.Println("SSEMCPClient.Start:", err)
+		}
 		return
 	})
 	app.Main()

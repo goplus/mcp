@@ -28,9 +28,10 @@ func (this *MCPApp) Main() {
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
+//line demo/hello/hello_mtest.gox:4:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/hello/hello_tool.gox:1:1
-	this.Tool("hello_world", func() {
+	this.Tool("helloWorld", func() {
 //line demo/hello/hello_tool.gox:2:1
 		this.Description("Say hello to someone")
 //line demo/hello/hello_tool.gox:3:1
