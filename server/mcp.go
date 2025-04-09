@@ -37,16 +37,20 @@ const (
 // MCPApp is the project class of a MCPServer classfile.
 type MCPApp struct {
 	svr  *server.MCPServer
+	las  func(addr string, svr *server.MCPServer) error
 	addr string
 }
 
-func (p *MCPApp) mcpServer() *server.MCPServer {
+// Sys returns the underlying MCPServer instance.
+// Don't use this method except for testing purposes.
+func (p *MCPApp) Sys() *server.MCPServer {
 	return p.svr
 }
 
 // Server creates a new MCP server instance with the given name and version.
 func (p *MCPApp) Server(name, version string) {
 	p.svr = server.NewMCPServer(name, version)
+	p.las = svx.ListenAndServe
 	p.addr = "stdio:"
 }
 
@@ -55,19 +59,23 @@ func (p *MCPApp) Run(addr string) {
 	p.addr = addr
 }
 
+// SetLAS sets the ListenAndServe function for the MCP server.
+func (p *MCPApp) SetLAS(las func(addr string, svr *server.MCPServer) error) {
+	p.las = las
+}
+
 func (p *MCPApp) serve() error {
-	return svx.ListenAndServe(p.addr, p.svr)
+	return p.las(p.addr, p.svr)
 }
 
 // -----------------------------------------------------------------------------
 
 var _ = (*ToolApp).addTo
-var _ = (*MCPApp).mcpServer
 var _ = (*MCPApp).serve
 
 type iAppProto interface {
-	mcpServer() *server.MCPServer
 	serve() error
+	Sys() *server.MCPServer
 	MainEntry()
 }
 
@@ -81,7 +89,7 @@ type iHandlerProto interface {
 // Gopt_MCPApp_Main is required by Go+ compiler as the entry of a MCPServer project.
 func Gopt_MCPApp_Main(app iAppProto, handlers ...iHandlerProto) {
 	app.MainEntry()
-	svr := app.mcpServer()
+	svr := app.Sys()
 	for _, h := range handlers {
 		reflect.ValueOf(h).Elem().Field(1).Set(reflect.ValueOf(app)) // (*handler).App = app
 		h.addTo(h, svr)
