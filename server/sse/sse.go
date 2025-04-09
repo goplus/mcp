@@ -42,7 +42,7 @@ func ListenAndServe(addr string, svr *server.MCPServer) (err error) {
 	if err != nil {
 		return
 	}
-	log.Println("Serving MCP server at", addr[4:])
+	log.Println("Serving MCP server at", addr)
 	return server.ListenAndServe()
 }
 

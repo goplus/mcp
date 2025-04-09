@@ -1,0 +1,6 @@
+import (
+	_ "github.com/goplus/mcp/server/sse"
+)
+
+server "Calculator", "1.0.0"
+run "sse://:8080"

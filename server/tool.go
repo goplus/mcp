@@ -19,6 +19,7 @@ package server
 import (
 	"context"
 	"errors"
+	"strconv"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -27,6 +28,21 @@ import (
 // Text creates a new CallToolResult with a text content
 func Text(text string) *mcp.CallToolResult {
 	return mcp.NewToolResultText(text)
+}
+
+// Number creates a new CallToolResult with a number content
+func Number__0(val float64) *mcp.CallToolResult {
+	return mcp.NewToolResultText(strconv.FormatFloat(val, 'f', -1, 64))
+}
+
+// Number creates a new CallToolResult with a number content
+func Number__1(val float64, prec int) *mcp.CallToolResult {
+	return mcp.NewToolResultText(strconv.FormatFloat(val, 'f', prec, 64))
+}
+
+// Number creates a new CallToolResult with a number content
+func Number__2(val float64, fmt byte, prec int) *mcp.CallToolResult {
+	return mcp.NewToolResultText(strconv.FormatFloat(val, fmt, prec, 64))
 }
 
 // -----------------------------------------------------------------------------
@@ -102,13 +118,26 @@ func (p *ToolApp) Description(description string) {
 }
 
 // String adds a string property to the tool schema.
-// It accepts property options to configure the string property's behavior and constraints.
+// It accepts property options to configure the string property's behavior
+// and constraints.
 func (p *ToolApp) String(name string, fn ...func()) {
 	if len(fn) > 0 {
 		p.opts = make([]mcp.PropertyOption, 0, 2)
 		fn[0]()
 	}
 	mcp.WithString(name, p.opts...)(&p.tool)
+	p.opts = nil
+}
+
+// Float adds a number property to the tool schema.
+// It accepts property options to configure the number property's behavior
+// and constraints.
+func (p *ToolApp) Float(name string, fn ...func()) {
+	if len(fn) > 0 {
+		p.opts = make([]mcp.PropertyOption, 0, 2)
+		fn[0]()
+	}
+	mcp.WithNumber(name, p.opts...)(&p.tool)
 	p.opts = nil
 }
 
