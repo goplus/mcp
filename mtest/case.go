@@ -62,12 +62,64 @@ func (p *CaseApp) Initialize(params map[string]any) *Request {
 	}, params))
 }
 
+// Ping creates a new request to ping the MCP server.
+func (p *CaseApp) Ping() *Request {
+	return p.Req__0("ping")
+}
+
+// List creates a new request to list resources, resources/templates, prompts or tools.
+func (p *CaseApp) List(what string, args map[string]any) *Request {
+	return p.Req__0(what + "/list").Params(args)
+}
+
+// Read creates a new request to read a resource.
+func (p *CaseApp) Read(uri string, args map[string]any) *Request {
+	return p.Req__0("resources/read").Params(map[string]any{
+		"uri":       uri,
+		"arguments": args,
+	})
+}
+
+// Subscribe creates a new request to subscribe to a resource.
+func (p *CaseApp) Subscribe(uri string) *Request {
+	return p.Req__0("resources/subscribe").Params(map[string]any{
+		"uri": uri,
+	})
+}
+
+// Unsubscribe creates a new request to unsubscribe from a resource.
+func (p *CaseApp) Unsubscribe(uri string) *Request {
+	return p.Req__0("resources/unsubscribe").Params(map[string]any{
+		"uri": uri,
+	})
+}
+
+// Prompt creates a new request to get a prompt.
+func (p *CaseApp) Prompt(name string, args map[string]any) *Request {
+	return p.Req__0("prompts/get").Params(map[string]any{
+		"name":      name,
+		"arguments": args,
+	})
+}
+
 // Call creates a new request to call a tool.
 func (p *CaseApp) Call(name string, args map[string]any) *Request {
 	return p.Req__0("tools/call").Params(map[string]any{
 		"name":      name,
 		"arguments": args,
 	})
+}
+
+// SetLevel creates a new request to set the logging level.
+func (p *CaseApp) SetLevel(level mcp.LoggingLevel) *Request {
+	return p.Req__0("logging/setLevel").Params(map[string]any{
+		"level": level,
+	})
+}
+
+// Complete creates a new request to complete a prompt or resource.
+func (p *CaseApp) Complete(args map[string]any) *Request {
+	return p.Req__0("completion/complete").Params(args)
 }
 
 // OnNotify registers a notification handler.

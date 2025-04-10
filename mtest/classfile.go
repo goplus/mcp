@@ -18,6 +18,8 @@ package mtest
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"testing"
@@ -30,6 +32,19 @@ const (
 	GopPackage   = "github.com/goplus/yap/test"
 	GopTestClass = true
 )
+
+// Dump prints the arguments in a formatted JSON style.
+func Dump(args ...any) {
+	in := make([]any, len(args))
+	for i, arg := range args {
+		if b, e := json.MarshalIndent(arg, "", "  "); e == nil {
+			in[i] = string(b)
+		} else {
+			in[i] = arg
+		}
+	}
+	fmt.Println(in...)
+}
 
 // -----------------------------------------------------------------------------
 
