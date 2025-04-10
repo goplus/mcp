@@ -4,5 +4,6 @@ initialize nil
 ret {}
 
 call "helloWorld", {"name": "Ken"}
-ret
-echo resp, lastErr
+ret {
+	"content": [{"type": "text", "text": "Hello, Ken!"}],
+}
