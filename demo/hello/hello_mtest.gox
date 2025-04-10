@@ -3,7 +3,7 @@ testServer new(MCPApp)
 initialize nil
 ret {}
 
-list "tools", nil
+list "tools"
 ret {
 	"tools": [
 		{

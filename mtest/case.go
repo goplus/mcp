@@ -68,7 +68,12 @@ func (p *CaseApp) Ping() *Request {
 }
 
 // List creates a new request to list resources, resources/templates, prompts or tools.
-func (p *CaseApp) List(what string, args map[string]any) *Request {
+func (p *CaseApp) List__0(what string) *Request {
+	return p.Req__0(what + "/list")
+}
+
+// List creates a new request to list resources, resources/templates, prompts or tools.
+func (p *CaseApp) List__1(what string, args map[string]any) *Request {
 	return p.Req__0(what + "/list").Params(args)
 }
 
