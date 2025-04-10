@@ -3,6 +3,28 @@ testServer new(MCPApp)
 initialize nil
 ret {}
 
+list "tools", nil
+ret {
+	"tools": [
+		{
+			"description": "Say hello to someone",
+			"inputSchema": {
+				"properties": {
+					"name": {
+						"description": "Name of the person to greet",
+						"type":        "string",
+					},
+				},
+				"required": [
+					"name",
+				],
+				"type": "object",
+			},
+			"name": "helloWorld",
+		},
+	],
+}
+
 call "helloWorld", {"name": "Ken"}
 ret {
 	"content": [{"type": "text", "text": "Hello, Ken!"}],
