@@ -81,17 +81,17 @@ type iAppProto interface {
 	MainEntry()
 }
 
-type iHandlerProto interface {
-	addTo(self iHandlerProto, svr *server.MCPServer)
+type ToolProto interface {
+	addTo(self ToolProto, svr *server.MCPServer)
 	Main(ctx context.Context, request mcp.CallToolRequest, t *ToolAppProto) *mcp.CallToolResult
-	Classclone() any
+	Classclone() ToolProto
 }
 
 // Gopt_MCPApp_Main is required by Go+ compiler as the entry of a MCPServer project.
-func Gopt_MCPApp_Main(app iAppProto, handlers ...iHandlerProto) {
+func Gopt_MCPApp_Main(app iAppProto, tools ...ToolProto) {
 	app.MainEntry()
 	svr := app.Sys()
-	for _, h := range handlers {
+	for _, h := range tools {
 		reflect.ValueOf(h).Elem().Field(1).Set(reflect.ValueOf(app)) // (*handler).App = app
 		h.addTo(h, svr)
 	}

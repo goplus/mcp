@@ -11,6 +11,4 @@ if !ok {
 	panic "name must be a string"
 }
 
-log.Println "==> name: ${name}"
-
 return text("Hello, ${name}!")
