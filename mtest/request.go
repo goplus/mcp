@@ -57,6 +57,11 @@ func (p *Request) Resp() map[string]any {
 	return p.resp
 }
 
+// LastErr returns the last error.
+func (p *Request) LastErr() error {
+	return p.rerr
+}
+
 const (
 	Gopo_Request_Ret = ".Send,.RetWith"
 )

@@ -62,6 +62,14 @@ func (p *CaseApp) Initialize(params map[string]any) *Request {
 	}, params))
 }
 
+// Call creates a new request to call a tool.
+func (p *CaseApp) Call(name string, args map[string]any) *Request {
+	return p.Req__0("tools/call").Params(map[string]any{
+		"name":      name,
+		"arguments": args,
+	})
+}
+
 // OnNotify registers a notification handler.
 func (p *CaseApp) OnNotify(notify func(method string, params map[string]any)) {
 	p.client.OnNotification(func(in mcp.JSONRPCNotification) {

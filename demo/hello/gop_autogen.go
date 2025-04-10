@@ -7,6 +7,7 @@ import (
 	"github.com/goplus/mcp/server"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/qiniu/x/stringutil"
+	"log"
 )
 
 const _ = true
@@ -28,7 +29,7 @@ func (this *MCPApp) Main() {
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
-//line demo/hello/hello_mtest.gox:4:1
+//line demo/hello/hello_mtest.gox:7:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/hello/hello_tool.gox:1:1
 	this.Tool("helloWorld", func() {
@@ -50,6 +51,8 @@ func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest
 		panic("name must be a string")
 	}
 //line demo/hello/hello_tool.gox:14:1
+	log.Println(stringutil.Concat("==> name: ", name))
+//line demo/hello/hello_tool.gox:16:1
 	return server.Text(stringutil.Concat("Hello, ", name, "!"))
 }
 func (this *hello) Classclone() any {
@@ -57,6 +60,6 @@ func (this *hello) Classclone() any {
 	return &_gop_ret
 }
 func main() {
-//line demo/hello/hello_tool.gox:14:1
+//line demo/hello/hello_tool.gox:16:1
 	new(MCPApp).Main()
 }
