@@ -19,6 +19,7 @@ package server
 import (
 	"context"
 	"errors"
+	"log"
 	"strconv"
 
 	"github.com/mark3labs/mcp-go/mcp"
@@ -91,7 +92,7 @@ func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *Tool
 	return nil
 }
 
-func (p *ToolApp) initToolApp() {
+func initToolApp(self iHandlerProto) {
 	defer func() {
 		if e := recover(); e != nil {
 			if _, ok := e.(stop); !ok {
@@ -99,13 +100,14 @@ func (p *ToolApp) initToolApp() {
 			}
 		}
 	}()
-	p.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
+	self.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
 		tool: mcp.NewTool(""),
 	})
 }
 
 // Tool calls fn to initialize the tool.
 func (p *ToolApp) Tool(name string, fn func()) {
+	log.Println("==> ToolApp.Tool", name, p.isClone)
 	if !p.isClone {
 		p.tool.Name = name
 		fn()
@@ -197,7 +199,7 @@ func (p *ToolApp) Required() {
 
 func (p *ToolApp) addTo(self iHandlerProto, svr *server.MCPServer) {
 	clone := self.Classclone
-	p.initToolApp()
+	initToolApp(self)
 	svr.AddTool(p.tool, func(ctx context.Context, request mcp.CallToolRequest) (ret *mcp.CallToolResult, err error) {
 		defer func() {
 			if e := recover(); e != nil {
