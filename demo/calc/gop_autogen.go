@@ -62,7 +62,7 @@ func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest,
 //line demo/calc/calc_tool.gox:19:1
 	return server.Number__0(x * y)
 }
-func (this *calc) Classclone() any {
+func (this *calc) Classclone() server.ToolProto {
 	_gop_ret := *this
 	return &_gop_ret
 }

@@ -4,4 +4,5 @@ initialize nil
 ret {}
 
 call "helloWorld", {"name": "Ken"}
+ret
 echo resp, lastErr
