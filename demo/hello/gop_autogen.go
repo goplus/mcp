@@ -24,10 +24,10 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(hello)})
+	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(hello)}, []server.PromptProto{})
 }
 //line demo/hello/hello_tool.gox:1
-func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
+func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
 //line demo/hello/hello_mtest.gox:29:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/hello/hello_tool.gox:1:1
