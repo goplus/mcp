@@ -11,6 +11,10 @@ import (
 
 const _ = true
 
+type greeting struct {
+	server.PromptApp
+	*MCPApp
+}
 type hello struct {
 	server.ToolApp
 	*MCPApp
@@ -24,7 +28,34 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(hello)}, []server.PromptProto{})
+	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(hello)}, []server.PromptProto{new(greeting)})
+}
+//line demo/hello/greeting_prompt.gox:1
+func (this *greeting) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
+	this.PromptApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+//line demo/hello/greeting_prompt.gox:1:1
+	this.Prompt__0("greeting", func() {
+//line demo/hello/greeting_prompt.gox:2:1
+		this.Description("A friendly greeting prompt")
+//line demo/hello/greeting_prompt.gox:3:1
+		this.Arg("name", func() {
+//line demo/hello/greeting_prompt.gox:4:1
+			this.Description("Name of the person to greet")
+		})
+	})
+//line demo/hello/greeting_prompt.gox:8:1
+	name := this.Gop_Env("name")
+//line demo/hello/greeting_prompt.gox:9:1
+	if name == "" {
+//line demo/hello/greeting_prompt.gox:10:1
+		name = "friend"
+	}
+//line demo/hello/greeting_prompt.gox:13:1
+	return "A friendly greeting", []mcp.PromptMessage{this.Prompt__1(server.RoleAssistant, server.Text(stringutil.Concat("Hello, ", name, "! How can I help you today?")))}
+}
+func (this *greeting) Classclone() server.PromptProto {
+	_gop_ret := *this
+	return &_gop_ret
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
