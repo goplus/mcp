@@ -7,8 +7,24 @@ import (
 	"testing"
 )
 
+type case_greeting struct {
+	mtest.CaseApp
+}
 type case_hello struct {
 	mtest.CaseApp
+}
+//line demo/hello/greeting_mtest.gox:1
+func (this *case_greeting) Main() {
+//line demo/hello/greeting_mtest.gox:1:1
+	this.TestServer__0(new(MCPApp))
+//line demo/hello/greeting_mtest.gox:3:1
+	this.Initialize(nil)
+//line demo/hello/greeting_mtest.gox:4:1
+	this.RetWith(map[string]interface{}{})
+//line demo/hello/greeting_mtest.gox:6:1
+	this.Prompt("greeting", map[string]any{"name": "Ken"})
+//line demo/hello/greeting_mtest.gox:7:1
+	this.RetWith(map[string]interface{}{"description": "A friendly greeting", "messages": []map[string]interface{}{map[string]interface{}{"content": map[string]string{"text": "Hello, Ken! How can I help you today?", "type": "text"}, "role": "assistant"}}})
 }
 //line demo/hello/hello_mtest.gox:1
 func (this *case_hello) Main() {
@@ -26,6 +42,9 @@ func (this *case_hello) Main() {
 	this.Call("helloWorld", map[string]any{"name": "Ken"})
 //line demo/hello/hello_mtest.gox:29:1
 	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"type": "text", "text": "Hello, Ken!"}}})
+}
+func Test_greeting(t *testing.T) {
+	mtest.Gopt_CaseApp_TestMain(new(case_greeting), t)
 }
 func Test_hello(t *testing.T) {
 	mtest.Gopt_CaseApp_TestMain(new(case_hello), t)

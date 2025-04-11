@@ -1,0 +1,18 @@
+testServer new(MCPApp)
+
+initialize nil
+ret {}
+
+prompt "greeting", {"name": "Ken"}
+ret {
+	"description": "A friendly greeting",
+	"messages": [
+		{
+			"content": {
+				"text": "Hello, Ken! How can I help you today?",
+				"type": "text",
+			},
+			"role": "assistant",
+		},
+	],
+}
