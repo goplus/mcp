@@ -1,0 +1,12 @@
+import "os"
+
+resource "docs://readme", "Project README", => {
+	description "The project's README file"
+	mimeType "text/markdown"
+}
+
+data := os.readFile("README.md")!
+
+return [
+	content({URI: "docs://readme", MIMEType: "text/markdown", Text: data}),
+]

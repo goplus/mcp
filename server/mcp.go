@@ -18,6 +18,7 @@ package server
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"reflect"
 	"strconv"
@@ -34,8 +35,6 @@ const (
 )
 
 // -----------------------------------------------------------------------------
-
-type Content = mcp.Content
 
 // Text creates a new TextContent
 func Text(text string) mcp.Content {
@@ -67,6 +66,16 @@ func Embedded__1(blob *mcp.BlobResourceContents) mcp.Content {
 	return mcp.NewEmbeddedResource(blob)
 }
 
+// Embedded creates a new EmbeddedResource
+func Embedded__2(v *JsonResourceContents) mcp.Content {
+	return mcp.NewEmbeddedResource(Content__2(v))
+}
+
+// Embedded creates a new EmbeddedResource
+func Embedded__3(text *TextResourceByteContents) mcp.Content {
+	return mcp.NewEmbeddedResource(Content__3(text))
+}
+
 /*
 // Image creates a new CallToolResult with an image content
 func Image(text, imageData, mimeType string) *mcp.CallToolResult {
@@ -78,6 +87,58 @@ func Resource(text string, resource mcp.ResourceContents) *mcp.CallToolResult {
 	return mcp.NewToolResultResource(text, resource)
 }
 */
+
+// -----------------------------------------------------------------------------
+
+type JsonResourceContents struct {
+	// The URI of this resource.
+	URI string
+	// JSON represents data to be serialized as JSON.
+	JSON any
+}
+
+// TextResourceByteContents represents a text resource with byte contents.
+type TextResourceByteContents struct {
+	// The URI of this resource.
+	URI string
+	// The MIME type of this resource, if known.
+	MIMEType string
+	// The text of the item. This must only be set if the item can actually be
+	// represented as text (not binary data).
+	Text []byte
+}
+
+// Content returns a TextResourceContents.
+func Content__0(text *mcp.TextResourceContents) *mcp.TextResourceContents {
+	return text
+}
+
+// Content returns a BlobResourceContents.
+func Content__1(blob *mcp.BlobResourceContents) *mcp.BlobResourceContents {
+	return blob
+}
+
+// Content returns a TextResourceContents.
+func Content__2(v *JsonResourceContents) *mcp.TextResourceContents {
+	b, err := json.Marshal(v.JSON)
+	if err != nil {
+		panic(err)
+	}
+	return &mcp.TextResourceContents{
+		URI:      v.URI,
+		MIMEType: "application/json",
+		Text:     string(b),
+	}
+}
+
+// Content returns a TextResourceContents.
+func Content__3(text *TextResourceByteContents) *mcp.TextResourceContents {
+	return &mcp.TextResourceContents{
+		URI:      text.URI,
+		MIMEType: text.MIMEType,
+		Text:     string(text.Text),
+	}
+}
 
 // -----------------------------------------------------------------------------
 
@@ -119,6 +180,7 @@ func (p *MCPApp) serve() error {
 
 // -----------------------------------------------------------------------------
 
+var _ = (*ResourceApp).addTo
 var _ = (*ToolApp).addTo
 var _ = (*PromptApp).addTo
 var _ = (*MCPApp).serve
@@ -129,6 +191,12 @@ type iAppProto interface {
 	serve() error
 	Sys() *server.MCPServer
 	MainEntry()
+}
+
+type ResourceProto interface {
+	addTo(self ResourceProto, svr *server.MCPServer)
+	Main(ctx context.Context, request mcp.ReadResourceRequest, t *ResourceAppProto) []mcp.ResourceContents
+	Classclone() ResourceProto
 }
 
 type ToolProto interface {
@@ -144,9 +212,13 @@ type PromptProto interface {
 }
 
 // Gopt_MCPApp_Main is required by Go+ compiler as the entry of a MCPServer project.
-func Gopt_MCPApp_Main(app iAppProto, tools []ToolProto, prompts []PromptProto) {
+func Gopt_MCPApp_Main(app iAppProto, resources []ResourceProto, tools []ToolProto, prompts []PromptProto) {
 	app.MainEntry()
 	svr := app.Sys()
+	for _, r := range resources {
+		reflect.ValueOf(r).Elem().Field(1).Set(reflect.ValueOf(app)) // (*ResourceApp).App = app
+		r.addTo(r, svr)
+	}
 	for _, h := range tools {
 		reflect.ValueOf(h).Elem().Field(1).Set(reflect.ValueOf(app)) // (*ToolApp).App = app
 		h.addTo(h, svr)

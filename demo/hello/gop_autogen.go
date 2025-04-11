@@ -24,7 +24,7 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Tool Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(hello)}, []server.PromptProto{})
+	server.Gopt_MCPApp_Main(this, []server.ResourceProto{}, []server.ToolProto{new(hello)}, []server.PromptProto{})
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {

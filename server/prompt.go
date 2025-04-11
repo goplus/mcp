@@ -87,7 +87,7 @@ func (p *PromptApp) Prompt__0(name string, fn func()) {
 }
 
 // Prompt creates a new PromptMessage
-func (p *PromptApp) Prompt__1(role Role, content Content) mcp.PromptMessage {
+func (p *PromptApp) Prompt__1(role Role, content mcp.Content) mcp.PromptMessage {
 	return mcp.NewPromptMessage(role, content)
 }
 
