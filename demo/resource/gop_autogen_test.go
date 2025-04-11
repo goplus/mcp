@@ -19,8 +19,14 @@ func (this *case_user_profile) Main() {
 //line demo/resource/user_profile_mtest.gox:4:1
 	this.RetWith(map[string]interface{}{})
 //line demo/resource/user_profile_mtest.gox:6:1
-	this.Read("users://123/profile", nil)
+	this.Read__0("docs://readme")
 //line demo/resource/user_profile_mtest.gox:7:1
+	this.Send()
+//line demo/resource/user_profile_mtest.gox:8:1
+	mtest.Dump(this.Resp())
+//line demo/resource/user_profile_mtest.gox:10:1
+	this.Read__0("users://123/profile")
+//line demo/resource/user_profile_mtest.gox:11:1
 	this.RetWith(map[string][]map[string]string{"contents": []map[string]string{map[string]string{"mimeType": "application/json", "text": `{"age":15,"id":"123","name":"Ken"}`, "uri": "users://123/profile"}}})
 }
 func Test_user_profile(t *testing.T) {

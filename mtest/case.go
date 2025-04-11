@@ -78,7 +78,12 @@ func (p *CaseApp) List__1(what string, args map[string]any) *Request {
 }
 
 // Read creates a new request to read a resource.
-func (p *CaseApp) Read(uri string, args map[string]any) *Request {
+func (p *CaseApp) Read__0(uri string) *Request {
+	return p.Read__1(uri, nil)
+}
+
+// Read creates a new request to read a resource.
+func (p *CaseApp) Read__1(uri string, args map[string]any) *Request {
 	return p.Req__0("resources/read").Params(map[string]any{
 		"uri":       uri,
 		"arguments": args,

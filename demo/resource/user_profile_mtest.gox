@@ -3,7 +3,11 @@ testServer new(MCPApp)
 initialize nil
 ret {}
 
-read "users://123/profile", nil
+read "docs://readme"
+ret
+dump resp
+
+read "users://123/profile"
 ret {
 	"contents": [
 		{
