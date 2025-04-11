@@ -32,6 +32,7 @@ func (this *MCPApp) Main() {
 }
 //line demo/hello/greeting_prompt.gox:1
 func (this *greeting) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
+//line demo/hello/greeting_mtest.gox:7:1
 	this.PromptApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/hello/greeting_prompt.gox:1:1
 	this.Prompt__0("greeting", func() {
