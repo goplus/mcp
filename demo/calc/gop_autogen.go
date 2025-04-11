@@ -30,6 +30,7 @@ func (this *MCPApp) Main() {
 }
 //line demo/calc/calc_tool.gox:1
 func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
+//line demo/calc/calc_mtest.gox:7:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/calc/calc_tool.gox:1:1
 	this.Tool("mul", func() {
@@ -60,7 +61,7 @@ func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest,
 		panic("multiplicative parameters x and y must be numbers")
 	}
 //line demo/calc/calc_tool.gox:19:1
-	return server.Number__0(x * y)
+	return server.Multiple(server.Text("multiply result:"), server.Number__0(x*y))
 }
 func (this *calc) Classclone() server.ToolProto {
 	_gop_ret := *this

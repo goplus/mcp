@@ -1,0 +1,18 @@
+testServer new(MCPApp)
+
+initialize nil
+ret {}
+
+call "mul", {"x": 2, "y": 3}
+ret {
+	"content": [
+		{
+			"text": "multiply result:",
+			"type": "text",
+		},
+		{
+			"text": "6",
+			"type": "text",
+		},
+	],
+}
