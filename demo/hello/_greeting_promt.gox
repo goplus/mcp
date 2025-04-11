@@ -1,0 +1,15 @@
+prompt "greeting", => {
+	description "A friendly greeting prompt"
+	arg "name", => {
+		description "Name of the person to greet"
+	}
+}
+
+name := ${name}
+if name == "" {
+	name = "friend"
+}
+
+return "A friendly greeting", [
+	prompt(RoleAssistant, text("Hello, ${name}! How can I help you today?")),
+]

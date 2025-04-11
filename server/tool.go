@@ -19,54 +19,19 @@ package server
 import (
 	"context"
 	"errors"
-	"strconv"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 )
 
-// Text creates a new CallToolResult with a text content
-func Text(text string) *mcp.CallToolResult {
-	return mcp.NewToolResultText(text)
-}
-
-// Number creates a new CallToolResult with a number content
-func Number__0(val float64) *mcp.CallToolResult {
-	return mcp.NewToolResultText(strconv.FormatFloat(val, 'f', -1, 64))
-}
-
-// Number creates a new CallToolResult with a number content
-func Number__1(val float64, prec int) *mcp.CallToolResult {
-	return mcp.NewToolResultText(strconv.FormatFloat(val, 'f', prec, 64))
-}
-
-// Number creates a new CallToolResult with a number content
-func Number__2(val float64, fmt byte, prec int) *mcp.CallToolResult {
-	return mcp.NewToolResultText(strconv.FormatFloat(val, fmt, prec, 64))
-}
-
-/*
-// Image creates a new CallToolResult with an image content
-func Image(text, imageData, mimeType string) *mcp.CallToolResult {
-	return mcp.NewToolResultImage(text, imageData, mimeType)
-}
-
-// Resource creates a new CallToolResult with a resource content
-func Resource(text string, resource mcp.ResourceContents) *mcp.CallToolResult {
-	return mcp.NewToolResultResource(text, resource)
-}
-*/
-
 // -----------------------------------------------------------------------------
-
-type stop struct{}
 
 type ToolAppProto struct {
 	tool mcp.Tool
 	opts []mcp.PropertyOption
 }
 
-// ToolApp is a worker class of a MCPServer classfile.
+// ToolApp is a work class of a MCPServer classfile.
 type ToolApp struct {
 	*ToolAppProto
 	ctx     context.Context
@@ -80,7 +45,7 @@ func (p *ToolApp) Gop_Env(name string) any {
 }
 
 // Main is required by Go+ compiler as the entry of a MCPServer tool.
-func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *ToolAppProto) *mcp.CallToolResult {
+func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *ToolAppProto) mcp.Content {
 	if t == nil {
 		p.ctx = ctx
 		p.request = request
@@ -211,7 +176,10 @@ func (p *ToolApp) addTo(self ToolProto, svr *server.MCPServer) {
 				}
 			}
 		}()
-		ret = clone().Main(ctx, request, nil)
+		content := clone().Main(ctx, request, nil)
+		ret = &mcp.CallToolResult{
+			Content: []mcp.Content{content},
+		}
 		return
 	})
 }
