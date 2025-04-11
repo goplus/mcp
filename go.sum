@@ -6,8 +6,8 @@ github.com/mark3labs/mcp-go v0.19.0 h1:cYKBPFD+fge273/TV6f5+TZYBSTnxV6GCJAO08D2w
 github.com/mark3labs/mcp-go v0.19.0/go.mod h1:KmJndYv7GIgcPVwEKJjNcbhVQ+hJGJhrCCB/9xITzpE=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/qiniu/x v1.13.16 h1:+6n4ZLODC1jwksGh1dfLHgwsq57D1us20ExlviyI6z8=
-github.com/qiniu/x v1.13.16/go.mod h1:AiovSOCaRijaf3fj+0CBOpR1457pn24b0Vdb1JpwhII=
+github.com/qiniu/x v1.13.17 h1:x5GJNg3rN2PagEZ5JvXmusoIaK1iaGGppFK41i0VAis=
+github.com/qiniu/x v1.13.17/go.mod h1:AiovSOCaRijaf3fj+0CBOpR1457pn24b0Vdb1JpwhII=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
 github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
 github.com/yosida95/uritemplate/v3 v3.0.2 h1:Ed3Oyj9yrmi9087+NczuL5BwkIc4wvTb5zIM+UJPGz4=
