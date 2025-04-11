@@ -29,3 +29,10 @@ call "helloWorld", {"name": "Ken"}
 ret {
 	"content": [{"type": "text", "text": "Hello, Ken!"}],
 }
+
+call "helloWorld", {"name": "Ken"}
+ret
+dump resp
+match {
+	"content": [{"type": "text", "text": "Hello, Ken!"}],
+}, resp

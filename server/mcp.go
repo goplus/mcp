@@ -57,6 +57,16 @@ func Number__2(val float64, fmt byte, prec int) mcp.Content {
 	return mcp.NewTextContent(strconv.FormatFloat(val, fmt, prec, 64))
 }
 
+// Embedded creates a new EmbeddedResource
+func Embedded__0(text *mcp.TextResourceContents) mcp.Content {
+	return mcp.NewEmbeddedResource(text)
+}
+
+// Embedded creates a new EmbeddedResource
+func Embedded__1(blob *mcp.BlobResourceContents) mcp.Content {
+	return mcp.NewEmbeddedResource(blob)
+}
+
 /*
 // Image creates a new CallToolResult with an image content
 func Image(text, imageData, mimeType string) *mcp.CallToolResult {

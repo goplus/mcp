@@ -37,7 +37,9 @@ const (
 func Dump(args ...any) {
 	in := make([]any, len(args))
 	for i, arg := range args {
-		if b, e := json.MarshalIndent(arg, "", "  "); e == nil {
+		if _, ok := arg.(error); ok {
+			in[i] = arg
+		} else if b, e := json.MarshalIndent(arg, "", "  "); e == nil {
 			in[i] = string(b)
 		} else {
 			in[i] = arg

@@ -117,6 +117,12 @@ func (p *PromptApp) Arg(name string, fn ...func()) {
 	p.opts = nil
 }
 
+// Required marks an argument as required in the prompt.
+// Required arguments must be provided when getting the prompt.
+func (p *PromptApp) Required() {
+	p.opts = append(p.opts, mcp.RequiredArgument())
+}
+
 func (p *PromptApp) addTo(self PromptProto, svr *server.MCPServer) {
 	clone := self.Classclone
 	initPromptApp(self)
