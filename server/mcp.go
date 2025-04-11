@@ -159,6 +159,18 @@ func Content__3(text *TextResourceByteContents) *mcp.TextResourceContents {
 
 // -----------------------------------------------------------------------------
 
+type withContext struct {
+	ctx context.Context
+	svr *server.MCPServer
+}
+
+// Notify sends a notification to the current client
+func (p withContext) Notify(method string, params map[string]any) {
+	p.svr.SendNotificationToClient(p.ctx, method, params)
+}
+
+// -----------------------------------------------------------------------------
+
 // MCPApp is the project class of a MCPServer classfile.
 type MCPApp struct {
 	svr  *server.MCPServer

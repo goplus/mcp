@@ -27,14 +27,15 @@ import (
 // -----------------------------------------------------------------------------
 
 type ToolAppProto struct {
-	tool mcp.Tool
-	opts []mcp.PropertyOption
+	tool   mcp.Tool
+	opts   []mcp.PropertyOption
+	parent *server.MCPServer
 }
 
 // ToolApp is a work class of a MCPServer classfile.
 type ToolApp struct {
 	*ToolAppProto
-	ctx     context.Context
+	withContext
 	request mcp.CallToolRequest
 	isClone bool
 	kind    byte
@@ -61,11 +62,12 @@ func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *Tool
 		p.isClone = true
 	} else {
 		p.ToolAppProto = t
+		p.svr = t.parent
 	}
 	return nil
 }
 
-func initToolApp(self ToolProto) {
+func initToolApp(self ToolProto, svr *server.MCPServer) {
 	defer func() {
 		if e := recover(); e != nil {
 			if _, ok := e.(stop); !ok {
@@ -74,7 +76,8 @@ func initToolApp(self ToolProto) {
 		}
 	}()
 	self.Main(context.TODO(), mcp.CallToolRequest{}, &ToolAppProto{
-		tool: mcp.NewTool(""),
+		tool:   mcp.NewTool(""),
+		parent: svr,
 	})
 }
 
@@ -264,7 +267,7 @@ func (p *ToolApp) Unique() {
 
 func (p *ToolApp) addTo(self ToolProto, svr *server.MCPServer) {
 	clone := self.Classclone
-	initToolApp(self)
+	initToolApp(self, svr)
 	svr.AddTool(p.tool, func(ctx context.Context, request mcp.CallToolRequest) (ret *mcp.CallToolResult, err error) {
 		defer func() {
 			if e := recover(); e != nil {
