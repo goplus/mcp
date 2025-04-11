@@ -8,40 +8,8 @@ import (
 	"testing"
 )
 
-type case_code_review struct {
-	mtest.CaseApp
-}
-type case_greeting struct {
-	mtest.CaseApp
-}
 type case_hello struct {
 	mtest.CaseApp
-}
-//line demo/hello/code_review_mtest.gox:1
-func (this *case_code_review) Main() {
-//line demo/hello/code_review_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
-//line demo/hello/code_review_mtest.gox:3:1
-	this.Initialize(nil)
-//line demo/hello/code_review_mtest.gox:4:1
-	this.RetWith(map[string]interface{}{})
-//line demo/hello/code_review_mtest.gox:6:1
-	this.Prompt("codeReview", map[string]any{"prNumber": "123"})
-//line demo/hello/code_review_mtest.gox:7:1
-	this.RetWith(map[string]interface{}{"description": "Code review assistance", "messages": []map[string]interface{}{map[string]interface{}{"content": map[string]string{"text": "You are a helpful code reviewer. Review the changes and provide constructive feedback.", "type": "text"}, "role": "user"}, map[string]interface{}{"content": map[string]interface{}{"resource": map[string]string{"mimeType": "text/x-diff", "text": "diff", "uri": "git://pulls/123/diff"}, "type": "resource"}, "role": "assistant"}}})
-}
-//line demo/hello/greeting_mtest.gox:1
-func (this *case_greeting) Main() {
-//line demo/hello/greeting_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
-//line demo/hello/greeting_mtest.gox:3:1
-	this.Initialize(nil)
-//line demo/hello/greeting_mtest.gox:4:1
-	this.RetWith(map[string]interface{}{})
-//line demo/hello/greeting_mtest.gox:6:1
-	this.Prompt("greeting", map[string]any{"name": "Ken"})
-//line demo/hello/greeting_mtest.gox:7:1
-	this.RetWith(map[string]interface{}{"description": "A friendly greeting", "messages": []map[string]interface{}{map[string]interface{}{"content": map[string]string{"text": "Hello, Ken! How can I help you today?", "type": "text"}, "role": "assistant"}}})
 }
 //line demo/hello/hello_mtest.gox:1
 func (this *case_hello) Main() {
@@ -67,12 +35,6 @@ func (this *case_hello) Main() {
 	mtest.Dump(this.Resp())
 //line demo/hello/hello_mtest.gox:36:1
 	test.Gopt_Case_MatchAny(this, map[string][]map[string]string{"content": []map[string]string{map[string]string{"type": "text", "text": "Hello, Ken!"}}}, this.Resp())
-}
-func Test_code_review(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_code_review), t)
-}
-func Test_greeting(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_greeting), t)
 }
 func Test_hello(t *testing.T) {
 	mtest.Gopt_CaseApp_TestMain(new(case_hello), t)
