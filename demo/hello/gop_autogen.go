@@ -24,7 +24,7 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, new(hello))
+	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(hello)})
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) *mcp.CallToolResult {
