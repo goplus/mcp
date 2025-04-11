@@ -1,0 +1,21 @@
+prompt "codeReview", => {
+	description "Code review assistance"
+	arg "prNumber", => {
+		required
+		description "Pull request number to review"
+	}
+}
+
+prNumber := ${prNumber}
+if prNumber == "" {
+	panic "prNumber is required"
+}
+
+return "Code review assistance", [
+	prompt(RoleUser, text("You are a helpful code reviewer. Review the changes and provide constructive feedback.")),
+	prompt(RoleAssistant, embedded({
+		URI:      "git://pulls/${prNumber}/diff",
+		MIMEType: "text/x-diff",
+		Text:     "diff",
+	})),
+]

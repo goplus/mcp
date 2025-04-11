@@ -1,0 +1,29 @@
+testServer new(MCPApp)
+
+initialize nil
+ret {}
+
+prompt "codeReview", {"prNumber": "123"}
+ret {
+	"description": "Code review assistance",
+	"messages": [
+		{
+			"content": {
+				"text": "You are a helpful code reviewer. Review the changes and provide constructive feedback.",
+				"type": "text",
+			},
+			"role": "user",
+		},
+		{
+			"content": {
+				"resource": {
+					"mimeType": "text/x-diff",
+					"text":     "diff",
+					"uri":      "git://pulls/123/diff",
+				},
+				"type": "resource",
+			},
+			"role": "assistant",
+		},
+	],
+}
