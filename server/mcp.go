@@ -36,57 +36,74 @@ const (
 
 // -----------------------------------------------------------------------------
 
-// Text creates a new TextContent
+type multiContents struct {
+	data []mcp.Content
+	mcp.Content
+}
+
+// Text creates a new TextContent.
 func Text(text string) mcp.Content {
 	return mcp.NewTextContent(text)
 }
 
-// Number creates a new TextContent with a number content
+// Number creates a new TextContent with a number content.
 func Number__0(val float64) mcp.Content {
 	return mcp.NewTextContent(strconv.FormatFloat(val, 'f', -1, 64))
 }
 
-// Number creates a new CallToolResult with a number content
+// Number creates a new TextContent with a number content.
 func Number__1(val float64, prec int) mcp.Content {
 	return mcp.NewTextContent(strconv.FormatFloat(val, 'f', prec, 64))
 }
 
-// Number creates a new CallToolResult with a number content
+// Number creates a new TextContent with a number content.
 func Number__2(val float64, fmt byte, prec int) mcp.Content {
 	return mcp.NewTextContent(strconv.FormatFloat(val, fmt, prec, 64))
 }
 
-// Embedded creates a new EmbeddedResource
+// Image creates a new ImageContent with an image.
+func Image__0(mimeType, imageData string) mcp.Content {
+	return &mcp.ImageContent{
+		Type:     "image",
+		Data:     imageData,
+		MIMEType: mimeType,
+	}
+}
+
+// Image creates a new Content with both text and image content.
+func Image__1(text, mimeType, imageData string) mcp.Content {
+	return Multiple(
+		Text(text),
+		Image__0(mimeType, imageData),
+	)
+}
+
+// Embedded creates a new EmbeddedResource.
 func Embedded__0(text *mcp.TextResourceContents) mcp.Content {
 	return mcp.NewEmbeddedResource(text)
 }
 
-// Embedded creates a new EmbeddedResource
+// Embedded creates a new EmbeddedResource.
 func Embedded__1(blob *mcp.BlobResourceContents) mcp.Content {
 	return mcp.NewEmbeddedResource(blob)
 }
 
-// Embedded creates a new EmbeddedResource
+// Embedded creates a new EmbeddedResource.
 func Embedded__2(v *JsonResourceContents) mcp.Content {
 	return mcp.NewEmbeddedResource(Content__2(v))
 }
 
-// Embedded creates a new EmbeddedResource
+// Embedded creates a new EmbeddedResource.
 func Embedded__3(text *TextResourceByteContents) mcp.Content {
 	return mcp.NewEmbeddedResource(Content__3(text))
 }
 
-/*
-// Image creates a new CallToolResult with an image content
-func Image(text, imageData, mimeType string) *mcp.CallToolResult {
-	return mcp.NewToolResultImage(text, imageData, mimeType)
+// Multiple creates a new Content with multiple contents.
+func Multiple(contents ...mcp.Content) mcp.Content {
+	return &multiContents{
+		data: contents,
+	}
 }
-
-// Resource creates a new CallToolResult with a resource content
-func Resource(text string, resource mcp.ResourceContents) *mcp.CallToolResult {
-	return mcp.NewToolResultResource(text, resource)
-}
-*/
 
 // -----------------------------------------------------------------------------
 

@@ -1,7 +1,11 @@
+// -----------------------------------------------------------------------------
+
 // Your DB/API call here
 func getUserProfile(userID string) (any, error) {
 	return {"name": "Ken", "age": 15, "id": userID}, nil
 }
+
+// -----------------------------------------------------------------------------
 
 resource "users://{id}/profile", "User Profile", => {
 	description "Returns user profile information"
@@ -18,3 +22,5 @@ profile := getUserProfile(userID)!
 return [
 	content({URI: requestURI, JSON: profile}),
 ]
+
+// -----------------------------------------------------------------------------

@@ -177,8 +177,11 @@ func (p *ToolApp) addTo(self ToolProto, svr *server.MCPServer) {
 			}
 		}()
 		content := clone().Main(ctx, request, nil)
-		ret = &mcp.CallToolResult{
-			Content: []mcp.Content{content},
+		ret = new(mcp.CallToolResult)
+		if multi, ok := content.(*multiContents); ok {
+			ret.Content = multi.data
+		} else {
+			ret.Content = []mcp.Content{content}
 		}
 		return
 	})

@@ -16,4 +16,7 @@ if !ok1 || !ok2 {
 	panic "multiplicative parameters x and y must be numbers"
 }
 
-return number(x * y)
+return multiple(
+	text("multiply result:"),
+	number(x*y),
+)
