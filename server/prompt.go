@@ -38,11 +38,12 @@ const (
 type PromptAppProto struct {
 	prompt mcp.Prompt
 	opts   []mcp.ArgumentOption
+	parent *server.MCPServer
 }
 
 type PromptApp struct {
 	*PromptAppProto
-	ctx     context.Context
+	withContext
 	request mcp.GetPromptRequest
 	isClone bool
 }
@@ -60,11 +61,12 @@ func (p *PromptApp) Main(ctx context.Context, request mcp.GetPromptRequest, t *P
 		p.isClone = true
 	} else {
 		p.PromptAppProto = t
+		p.svr = t.parent
 	}
 	return "", nil
 }
 
-func initPromptApp(self PromptProto) {
+func initPromptApp(self PromptProto, svr *server.MCPServer) {
 	defer func() {
 		if e := recover(); e != nil {
 			if _, ok := e.(stop); !ok {
@@ -74,6 +76,7 @@ func initPromptApp(self PromptProto) {
 	}()
 	self.Main(context.TODO(), mcp.GetPromptRequest{}, &PromptAppProto{
 		prompt: mcp.NewPrompt(""),
+		parent: svr,
 	})
 }
 
@@ -125,7 +128,7 @@ func (p *PromptApp) Required() {
 
 func (p *PromptApp) addTo(self PromptProto, svr *server.MCPServer) {
 	clone := self.Classclone
-	initPromptApp(self)
+	initPromptApp(self, svr)
 	svr.AddPrompt(p.prompt, func(ctx context.Context, request mcp.GetPromptRequest) (ret *mcp.GetPromptResult, err error) {
 		defer func() {
 			if e := recover(); e != nil {

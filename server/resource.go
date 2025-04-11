@@ -31,11 +31,12 @@ import (
 type ResourceAppProto struct {
 	resource mcp.Resource
 	template mcp.ResourceTemplate
+	parent   *server.MCPServer
 }
 
 type ResourceApp struct {
 	*ResourceAppProto
-	ctx      context.Context
+	withContext
 	request  mcp.ReadResourceRequest
 	values   uritemplate.Values
 	isClone  bool
@@ -75,11 +76,12 @@ func (p *ResourceApp) Main(ctx context.Context, request mcp.ReadResourceRequest,
 		p.isClone = true
 	} else {
 		p.ResourceAppProto = t
+		p.svr = t.parent
 	}
 	return nil
 }
 
-func initResourceApp(self ResourceProto) {
+func initResourceApp(self ResourceProto, svr *server.MCPServer) {
 	defer func() {
 		if e := recover(); e != nil {
 			if _, ok := e.(stop); !ok {
@@ -87,7 +89,9 @@ func initResourceApp(self ResourceProto) {
 			}
 		}
 	}()
-	self.Main(context.TODO(), mcp.ReadResourceRequest{}, &ResourceAppProto{})
+	self.Main(context.TODO(), mcp.ReadResourceRequest{}, &ResourceAppProto{
+		parent: svr,
+	})
 }
 
 func hasTemplate(uri string) bool {
@@ -146,7 +150,7 @@ func (p *ResourceApp) addTo(self ResourceProto, svr *server.MCPServer) {
 		ret = clone().Main(ctx, request, nil)
 		return
 	}
-	initResourceApp(self)
+	initResourceApp(self, svr)
 	if p.hasTempl {
 		svr.AddResourceTemplate(p.template, handle)
 	} else {
