@@ -48,7 +48,7 @@ type PromptApp struct {
 }
 
 // Gop_Env returns the value of the specified parameter.
-func (p *PromptApp) Gop_Env(name string) any {
+func (p *PromptApp) Gop_Env(name string) string {
 	return p.request.Params.Arguments[name]
 }
 
