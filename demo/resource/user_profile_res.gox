@@ -1,0 +1,20 @@
+// Your DB/API call here
+func getUserProfile(userID string) (any, error) {
+	return {"name": "Ken", "age": 15, "id": userID}, nil
+}
+
+resource "users://{id}/profile", "User Profile", => {
+	description "Returns user profile information"
+	mimeType "application/json"
+}
+
+userID, ok := ${id}.(string)
+if !ok {
+	panic "user id is required"
+}
+
+profile := getUserProfile(userID)!
+
+return [
+	content({URI: requestURI, JSON: profile}),
+]

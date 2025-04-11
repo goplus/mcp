@@ -1,0 +1,15 @@
+testServer new(MCPApp)
+
+initialize nil
+ret {}
+
+read "users://123/profile", nil
+ret {
+	"contents": [
+		{
+			"mimeType": "application/json",
+			"text":     `{"age":15,"id":"123","name":"Ken"}`,
+			"uri":      "users://123/profile",
+		},
+	],
+}

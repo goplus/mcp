@@ -28,7 +28,7 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Prompt Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, []server.ToolProto{}, []server.PromptProto{new(code_review), new(greeting)})
+	server.Gopt_MCPApp_Main(this, []server.ResourceProto{}, []server.ToolProto{}, []server.PromptProto{new(code_review), new(greeting)})
 }
 //line demo/prompt/code_review_prompt.gox:1
 func (this *code_review) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {

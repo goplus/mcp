@@ -26,7 +26,7 @@ func (this *MCPApp) MainEntry() {
 	this.Run("sse://:8080")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, []server.ToolProto{new(calc)}, []server.PromptProto{})
+	server.Gopt_MCPApp_Main(this, []server.ResourceProto{}, []server.ToolProto{new(calc)}, []server.PromptProto{})
 }
 //line demo/calc/calc_tool.gox:1
 func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
