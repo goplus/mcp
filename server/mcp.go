@@ -88,7 +88,7 @@ type ToolProto interface {
 }
 
 // Gopt_MCPApp_Main is required by Go+ compiler as the entry of a MCPServer project.
-func Gopt_MCPApp_Main(app iAppProto, tools ...ToolProto) {
+func Gopt_MCPApp_Main(app iAppProto, tools []ToolProto) {
 	app.MainEntry()
 	svr := app.Sys()
 	for _, h := range tools {
