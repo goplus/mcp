@@ -30,7 +30,7 @@ func (this *MCPApp) Main() {
 }
 //line demo/longruntool/longrun_tool.gox:3
 func (this *longrun) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-//line demo/longruntool/longrun_mtest.gox:16:1
+//line demo/longruntool/longrun_mtest.gox:28:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/longruntool/longrun_tool.gox:3:1
 	this.Tool("longRunningOperation", func() {
@@ -53,29 +53,39 @@ func (this *longrun) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolReque
 	})
 //line demo/longruntool/longrun_tool.gox:15:1
 	progressToken := this.MetaProgressToken()
-//line demo/longruntool/longrun_tool.gox:16:1
-	duration := this.Gop_Env("duration").(float64)
 //line demo/longruntool/longrun_tool.gox:17:1
-	steps := this.Gop_Env("steps").(float64)
+	duration, ok := this.Gop_Env("duration").(float64)
 //line demo/longruntool/longrun_tool.gox:18:1
-	stepDuration := time.Duration(duration / steps * float64(time.Second))
+	if !ok {
 //line demo/longruntool/longrun_tool.gox:19:1
-	n := int(steps)
-//line demo/longruntool/longrun_tool.gox:21:1
-	for
-//line demo/longruntool/longrun_tool.gox:21:1
-	i := 0; i < n;
-//line demo/longruntool/longrun_tool.gox:21:1
-	i++ {
+		duration = 10
+	}
 //line demo/longruntool/longrun_tool.gox:22:1
-		time.Sleep(stepDuration)
+	steps, ok := this.Gop_Env("steps").(float64)
 //line demo/longruntool/longrun_tool.gox:23:1
-		if progressToken != nil {
+	if !ok {
 //line demo/longruntool/longrun_tool.gox:24:1
+		steps = 5
+	}
+//line demo/longruntool/longrun_tool.gox:27:1
+	stepDuration := time.Duration(duration / steps * float64(time.Second))
+//line demo/longruntool/longrun_tool.gox:28:1
+	n := int(steps)
+//line demo/longruntool/longrun_tool.gox:30:1
+	for
+//line demo/longruntool/longrun_tool.gox:30:1
+	i := 0; i < n;
+//line demo/longruntool/longrun_tool.gox:30:1
+	i++ {
+//line demo/longruntool/longrun_tool.gox:31:1
+		time.Sleep(stepDuration)
+//line demo/longruntool/longrun_tool.gox:32:1
+		if progressToken != nil {
+//line demo/longruntool/longrun_tool.gox:33:1
 			this.Notify("notifications/progress", map[string]any{"progress": i + 1, "total": n, "progressToken": progressToken})
 		}
 	}
-//line demo/longruntool/longrun_tool.gox:32:1
+//line demo/longruntool/longrun_tool.gox:41:1
 	return server.Text(stringutil.Concat("Long running operation completed. Duration: ", strconv.FormatFloat(duration, 'g', -1, 64), " seconds, Steps: ", strconv.Itoa(n), "."))
 }
 func (this *longrun) Classclone() server.ToolProto {
@@ -83,6 +93,6 @@ func (this *longrun) Classclone() server.ToolProto {
 	return &_gop_ret
 }
 func main() {
-//line demo/longruntool/longrun_tool.gox:32:1
+//line demo/longruntool/longrun_tool.gox:41:1
 	new(MCPApp).Main()
 }

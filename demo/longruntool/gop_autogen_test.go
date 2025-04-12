@@ -27,6 +27,10 @@ func (this *case_longrun) Main() {
 	this.Call__1("longRunningOperation", map[string]any{"duration": 1, "steps": 3}, map[string]any{"progressToken": 1})
 //line demo/longruntool/longrun_mtest.gox:16:1
 	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "Long running operation completed. Duration: 1 seconds, Steps: 3.", "type": "text"}}})
+//line demo/longruntool/longrun_mtest.gox:25:1
+	this.Call__0("longRunningOperation", map[string]any{"duration": 1})
+//line demo/longruntool/longrun_mtest.gox:28:1
+	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "Long running operation completed. Duration: 1 seconds, Steps: 5.", "type": "text"}}})
 }
 func Test_longrun(t *testing.T) {
 	mtest.Gopt_CaseApp_TestMain(new(case_longrun), t)
