@@ -1,0 +1,42 @@
+tool "compositeObject", => {
+	description "A composite object tool"
+	string "name", => {
+		required
+		description "User name"
+	}
+	object "profile", => {
+		required
+		description "User profile"
+		float "age"
+		array "works", => {
+			description "Work experience"
+			object "items", => {
+				string "company", => {
+					required
+					description "Company name"
+				}
+				string "start", => {
+					required
+					description "Start time"
+				}
+				string "end", => {
+					description "End time"
+				}
+			}
+		}
+	}
+}
+
+name, ok := ${name}.(string)
+if !ok {
+	panic "name must be a string"
+}
+
+profile, ok := ${profile}.(map[string]any)
+if !ok {
+	panic "profile must be an object"
+}
+
+return text({
+	JSON: {"name": name, "profile": profile},
+})

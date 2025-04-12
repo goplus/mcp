@@ -1,0 +1,69 @@
+testServer new(MCPApp)
+
+initialize nil
+ret {}
+
+list "tools"
+ret {
+	"tools": [
+		{
+			"name":        "compositeObject",
+			"description": "A composite object tool",
+			"inputSchema": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"description": "User name",
+						"type":        "string",
+					},
+					"profile": {
+						"description": "User profile",
+						"type":        "object",
+						"properties": {
+							"age": {
+								"type": "number",
+							},
+							"works": {
+								"description": "Work experience",
+								"type":        "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"company": {
+											"description": "Company name",
+											"type":        "string",
+										},
+										"end": {
+											"description": "End time",
+											"type":        "string",
+										},
+										"start": {
+											"description": "Start time",
+											"type":        "string",
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+				"required": [
+					"name",
+					"profile",
+				],
+			},
+		},
+	],
+}
+
+call "compositeObject", {
+	"name": "Ken",
+	"profile": {
+		"age": 25,
+		"works": [
+			{"company": "Go+ Limited", "start": "2020-5-23"},
+		],
+	},
+}
+ret
+dump resp

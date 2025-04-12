@@ -54,7 +54,7 @@ func (this *code_review) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPrompt
 		panic("prNumber is required")
 	}
 //line demo/prompt/code_review_prompt.gox:14:1
-	return "Code review assistance", []mcp.PromptMessage{this.Prompt__1(server.RoleUser, server.Text("You are a helpful code reviewer. Review the changes and provide constructive feedback.")), this.Prompt__1(server.RoleAssistant, server.Embedded__0(&mcp.TextResourceContents{URI: stringutil.Concat("git://pulls/", prNumber, "/diff"), MIMEType: "text/x-diff", Text: "diff"}))}
+	return "Code review assistance", []mcp.PromptMessage{this.Prompt__1(server.RoleUser, server.Text__0("You are a helpful code reviewer. Review the changes and provide constructive feedback.")), this.Prompt__1(server.RoleAssistant, server.Embedded__0(&mcp.TextResourceContents{URI: stringutil.Concat("git://pulls/", prNumber, "/diff"), MIMEType: "text/x-diff", Text: "diff"}))}
 }
 func (this *code_review) Classclone() server.PromptProto {
 	_gop_ret := *this
@@ -82,7 +82,7 @@ func (this *greeting) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptReq
 		name = "friend"
 	}
 //line demo/prompt/greeting_prompt.gox:13:1
-	return "A friendly greeting", []mcp.PromptMessage{this.Prompt__1(server.RoleAssistant, server.Text(stringutil.Concat("Hello, ", name, "! How can I help you today?")))}
+	return "A friendly greeting", []mcp.PromptMessage{this.Prompt__1(server.RoleAssistant, server.Text__0(stringutil.Concat("Hello, ", name, "! How can I help you today?")))}
 }
 func (this *greeting) Classclone() server.PromptProto {
 	_gop_ret := *this
