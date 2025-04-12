@@ -13,8 +13,17 @@ tool "longRunningOperation", => {
 }
 
 progressToken := metaProgressToken
-duration := ${duration}.(float64)
-steps := ${steps}.(float64)
+
+duration, ok := ${duration}.(float64)
+if !ok {
+	duration = 10
+}
+
+steps, ok := ${steps}.(float64)
+if !ok {
+	steps = 5
+}
+
 stepDuration := time.Duration((duration / steps) * float64(time.Second))
 n := int(steps)
 

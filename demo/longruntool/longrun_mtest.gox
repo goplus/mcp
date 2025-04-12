@@ -21,3 +21,15 @@ ret {
 		},
 	],
 }
+
+call "longRunningOperation", {
+	"duration": 1,
+}
+ret {
+	"content": [
+		{
+			"text": "Long running operation completed. Duration: 1 seconds, Steps: 5.",
+			"type": "text",
+		},
+	],
+}
