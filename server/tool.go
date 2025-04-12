@@ -230,30 +230,43 @@ func (p *ToolApp) Minval(value float64) {
 	p.opts = append(p.opts, mcp.Min(value))
 }
 
-// Maxlen sets the maximum length for a string or an array property. The
-// string or array length must not exceed this length.
+// Maxlen sets the maximum length for a string, array or object property. The
+// string, array or object length must not exceed this length.
 func (p *ToolApp) Maxlen(n int) {
 	switch p.kind {
 	case kindString:
 		p.opts = append(p.opts, mcp.MaxLength(n))
 	case kindArray:
 		p.opts = append(p.opts, mcp.MaxItems(n))
+	case kindObject:
+		p.opts = append(p.opts, mcp.MaxProperties(n))
 	default:
-		panic("maxlen: not a string or array property")
+		panic("maxlen: not a string, array or object property")
 	}
 }
 
-// Minlen sets the minimum length for a string or an array property. The
-// string or array length must not be less than this length.
+// Minlen sets the minimum length for a string, array or object property. The
+// string, array or object length must not be less than this length.
 func (p *ToolApp) Minlen(n int) {
 	switch p.kind {
 	case kindString:
 		p.opts = append(p.opts, mcp.MinLength(n))
 	case kindArray:
 		p.opts = append(p.opts, mcp.MinItems(n))
+	case kindObject:
+		p.opts = append(p.opts, mcp.MinProperties(n))
 	default:
-		panic("minlen: not a string or array property")
+		panic("minlen: not a string, array or object property")
 	}
+}
+
+// MultipleOf specifies that a number must be a multiple of the given value.
+// The number value must be divisible by this value.
+func (p *ToolApp) MultipleOf(value float64) {
+	if p.kind != kindNumber {
+		panic("multipleof: not a number property")
+	}
+	p.opts = append(p.opts, mcp.MultipleOf(value))
 }
 
 // Enum specifies a list of allowed values for a string property. The property
@@ -265,12 +278,27 @@ func (p *ToolApp) Enum(values ...string) {
 	p.opts = append(p.opts, mcp.Enum(values...))
 }
 
+// Pattern sets a regex pattern that a string property must match. The string
+// value must conform to the specified regular expression.
+func (p *ToolApp) Pattern(pattern string) {
+	if p.kind != kindString {
+		panic("pattern: not a string property")
+	}
+	p.opts = append(p.opts, mcp.Pattern(pattern))
+}
+
 // Unique specifies that the array property must contain unique items.
 func (p *ToolApp) Unique() {
 	if p.kind != kindArray {
 		panic("unique: not an array property")
 	}
 	p.opts = append(p.opts, mcp.UniqueItems(true))
+}
+
+// Title adds a display-friendly title to a property in the JSON Schema.
+// This title can be used by UI components to show a more readable property name.
+func (p *ToolApp) Title(title string) {
+	p.opts = append(p.opts, mcp.Title(title))
 }
 
 func (p *ToolApp) addTo(self ToolProto, svr *server.MCPServer) {
