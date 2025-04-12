@@ -113,10 +113,19 @@ func (p *CaseApp) Prompt(name string, args map[string]any) *Request {
 }
 
 // Call creates a new request to call a tool.
-func (p *CaseApp) Call(name string, args map[string]any) *Request {
+func (p *CaseApp) Call__0(name string, args map[string]any) *Request {
 	return p.Req__0("tools/call").Params(map[string]any{
 		"name":      name,
 		"arguments": args,
+	})
+}
+
+// Call creates a new request to call a tool.
+func (p *CaseApp) Call__1(name string, args, meta map[string]any) *Request {
+	return p.Req__0("tools/call").Params(map[string]any{
+		"name":      name,
+		"arguments": args,
+		"_meta":     meta,
 	})
 }
 
@@ -133,7 +142,16 @@ func (p *CaseApp) Complete(args map[string]any) *Request {
 }
 
 // OnNotify registers a notification handler.
-func (p *CaseApp) OnNotify(notify func(method string, params map[string]any)) {
+func (p *CaseApp) OnNotify__0(method string, notify func(params map[string]any)) {
+	p.client.OnNotification(func(in mcp.JSONRPCNotification) {
+		if method == in.Method {
+			notify(makeParams(in.Params.Meta, in.Params.AdditionalFields))
+		}
+	})
+}
+
+// OnNotify registers a notification handler.
+func (p *CaseApp) OnNotify__1(notify func(method string, params map[string]any)) {
 	p.client.OnNotification(func(in mcp.JSONRPCNotification) {
 		notify(in.Method, makeParams(in.Params.Meta, in.Params.AdditionalFields))
 	})

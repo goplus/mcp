@@ -24,11 +24,11 @@ func (this *case_hello) Main() {
 //line demo/hello/hello_mtest.gox:7:1
 	this.RetWith(map[string][]map[string]interface{}{"tools": []map[string]interface{}{map[string]interface{}{"description": "Say hello to someone", "inputSchema": map[string]interface{}{"properties": map[string]map[string]string{"name": map[string]string{"description": "Name of the person to greet", "type": "string"}}, "required": []string{"name"}, "type": "object"}, "name": "helloWorld"}}})
 //line demo/hello/hello_mtest.gox:28:1
-	this.Call("helloWorld", map[string]any{"name": "Ken"})
+	this.Call__0("helloWorld", map[string]any{"name": "Ken"})
 //line demo/hello/hello_mtest.gox:29:1
 	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"type": "text", "text": "Hello, Ken!"}}})
 //line demo/hello/hello_mtest.gox:33:1
-	this.Call("helloWorld", map[string]any{"name": "Ken"})
+	this.Call__0("helloWorld", map[string]any{"name": "Ken"})
 //line demo/hello/hello_mtest.gox:34:1
 	this.Send()
 //line demo/hello/hello_mtest.gox:35:1

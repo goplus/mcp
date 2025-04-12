@@ -1,0 +1,23 @@
+testServer new(MCPApp)
+
+initialize nil
+ret {}
+
+onNotify "notifications/progress", params => {
+    dump params
+}
+
+call "longRunningOperation", {
+	"duration": 1,
+	"steps":    3,
+}, {
+    "progressToken": 1,
+}
+ret {
+	"content": [
+		{
+			"text": "Long running operation completed. Duration: 1 seconds, Steps: 3.",
+			"type": "text",
+		},
+	],
+}

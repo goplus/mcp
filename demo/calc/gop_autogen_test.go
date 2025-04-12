@@ -19,7 +19,7 @@ func (this *case_calc) Main() {
 //line demo/calc/calc_mtest.gox:4:1
 	this.RetWith(map[string]interface{}{})
 //line demo/calc/calc_mtest.gox:6:1
-	this.Call("mul", map[string]any{"x": 2, "y": 3})
+	this.Call__0("mul", map[string]any{"x": 2, "y": 3})
 //line demo/calc/calc_mtest.gox:7:1
 	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "multiply result:", "type": "text"}, map[string]string{"text": "6", "type": "text"}}})
 }

@@ -49,6 +49,14 @@ const (
 	kindObject  = 5
 )
 
+// MetaProgressToken returns the progress token for the tool.
+func (p *ToolApp) MetaProgressToken() mcp.ProgressToken {
+	if meta := p.request.Params.Meta; meta != nil {
+		return meta.ProgressToken
+	}
+	return nil
+}
+
 // Gop_Env returns the value of the specified parameter.
 func (p *ToolApp) Gop_Env(name string) any {
 	return p.request.Params.Arguments[name]
