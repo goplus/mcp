@@ -50,7 +50,7 @@ func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest
 		panic("name must be a string")
 	}
 //line demo/hello/hello_tool.gox:14:1
-	return server.Text(stringutil.Concat("Hello, ", name, "!"))
+	return server.Text__0(stringutil.Concat("Hello, ", name, "!"))
 }
 func (this *hello) Classclone() server.ToolProto {
 	_gop_ret := *this

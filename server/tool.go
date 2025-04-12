@@ -27,9 +27,10 @@ import (
 // -----------------------------------------------------------------------------
 
 type ToolAppProto struct {
+	parent *server.MCPServer
 	tool   mcp.Tool
 	opts   []mcp.PropertyOption
-	parent *server.MCPServer
+	kind   byte
 }
 
 // ToolApp is a work class of a MCPServer classfile.
@@ -38,7 +39,6 @@ type ToolApp struct {
 	withContext
 	request mcp.CallToolRequest
 	isClone bool
-	kind    byte
 }
 
 const (
@@ -118,65 +118,86 @@ func (p *ToolApp) Description(description string) {
 // It accepts property options to configure the string property's behavior
 // and constraints.
 func (p *ToolApp) String(name string, fn ...func()) {
-	p.kind = kindString
+	op, np := p.ToolAppProto, &ToolAppProto{
+		kind: kindString,
+	}
+	p.ToolAppProto = np
 	if len(fn) > 0 {
-		p.opts = make([]mcp.PropertyOption, 0, 2)
+		np.opts = make([]mcp.PropertyOption, 0, 2)
 		fn[0]()
 	}
-	mcp.WithString(name, p.opts...)(&p.tool)
-	p.opts = nil
+	mcp.WithString(name, np.opts...)(&op.tool)
+	p.ToolAppProto = op
 }
 
 // Float adds a number property to the tool schema.
 // It accepts property options to configure the number property's behavior
 // and constraints.
 func (p *ToolApp) Float(name string, fn ...func()) {
-	p.kind = kindNumber
+	op, np := p.ToolAppProto, &ToolAppProto{
+		kind: kindNumber,
+	}
+	p.ToolAppProto = np
 	if len(fn) > 0 {
-		p.opts = make([]mcp.PropertyOption, 0, 2)
+		np.opts = make([]mcp.PropertyOption, 0, 2)
 		fn[0]()
 	}
-	mcp.WithNumber(name, p.opts...)(&p.tool)
-	p.opts = nil
+	mcp.WithNumber(name, np.opts...)(&op.tool)
+	p.ToolAppProto = op
 }
 
 // Bool adds a boolean property to the tool schema.
 // It accepts property options to configure the boolean property's behavior
 // and constraints.
 func (p *ToolApp) Bool(name string, fn ...func()) {
-	p.kind = kindBoolean
+	op, np := p.ToolAppProto, &ToolAppProto{
+		kind: kindBoolean,
+	}
+	p.ToolAppProto = np
 	if len(fn) > 0 {
-		p.opts = make([]mcp.PropertyOption, 0, 2)
+		np.opts = make([]mcp.PropertyOption, 0, 2)
 		fn[0]()
 	}
-	mcp.WithBoolean(name, p.opts...)(&p.tool)
-	p.opts = nil
+	mcp.WithBoolean(name, np.opts...)(&op.tool)
+	p.ToolAppProto = op
 }
 
 // Array adds an array property to the tool schema.
 // It accepts property options to configure the array property's behavior
 // and constraints.
 func (p *ToolApp) Array(name string, fn ...func()) {
-	p.kind = kindArray
+	op, np := p.ToolAppProto, &ToolAppProto{
+		tool: mcp.NewTool(""),
+		kind: kindArray,
+	}
+	p.ToolAppProto = np
 	if len(fn) > 0 {
-		p.opts = make([]mcp.PropertyOption, 0, 2)
+		np.opts = make([]mcp.PropertyOption, 0, 2)
 		fn[0]()
 	}
-	mcp.WithArray(name, p.opts...)(&p.tool)
-	p.opts = nil
+	if items, ok := np.tool.InputSchema.Properties["items"]; ok {
+		np.opts = append(np.opts, mcp.Items(items))
+	}
+	mcp.WithArray(name, np.opts...)(&op.tool)
+	p.ToolAppProto = op
 }
 
 // Object adds an object property to the tool schema.
 // It accepts property options to configure the object property's behavior
 // and constraints.
 func (p *ToolApp) Object(name string, fn ...func()) {
-	p.kind = kindObject
+	op, np := p.ToolAppProto, &ToolAppProto{
+		tool: mcp.NewTool(""),
+		kind: kindObject,
+	}
+	p.ToolAppProto = np
 	if len(fn) > 0 {
-		p.opts = make([]mcp.PropertyOption, 0, 2)
+		np.opts = make([]mcp.PropertyOption, 0, 2)
 		fn[0]()
 	}
-	mcp.WithObject(name, p.opts...)(&p.tool)
-	p.opts = nil
+	np.opts = append(np.opts, mcp.Properties(np.tool.InputSchema.Properties))
+	mcp.WithObject(name, np.opts...)(&op.tool)
+	p.ToolAppProto = op
 }
 
 // Required marks a property as required in the tool's input schema.

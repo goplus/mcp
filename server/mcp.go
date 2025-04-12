@@ -41,9 +41,24 @@ type multiContents struct {
 	mcp.Content
 }
 
+// JsonContent represents a JSON content.
+type JsonContent struct {
+	// JSON represents data to be serialized as JSON.
+	JSON any
+}
+
 // Text creates a new TextContent.
-func Text(text string) mcp.Content {
+func Text__0(text string) mcp.Content {
 	return mcp.NewTextContent(text)
+}
+
+// Text creates a new TextContent with a JSON content.
+func Text__1(v JsonContent) mcp.Content {
+	b, err := json.Marshal(v.JSON)
+	if err != nil {
+		panic(err)
+	}
+	return mcp.NewTextContent(string(b))
 }
 
 // Number creates a new TextContent with a number content.
@@ -73,7 +88,7 @@ func Image__0(mimeType, imageData string) mcp.Content {
 // Image creates a new Content with both text and image content.
 func Image__1(text, mimeType, imageData string) mcp.Content {
 	return Multiple(
-		Text(text),
+		Text__0(text),
 		Image__0(mimeType, imageData),
 	)
 }

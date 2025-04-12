@@ -61,7 +61,7 @@ func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest,
 		panic("multiplicative parameters x and y must be numbers")
 	}
 //line demo/calc/calc_tool.gox:19:1
-	return server.Multiple(server.Text("multiply result:"), server.Number__0(x*y))
+	return server.Multiple(server.Text__0("multiply result:"), server.Number__0(x*y))
 }
 func (this *calc) Classclone() server.ToolProto {
 	_gop_ret := *this

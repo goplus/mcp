@@ -86,7 +86,7 @@ func (this *longrun) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolReque
 		}
 	}
 //line demo/longruntool/longrun_tool.gox:41:1
-	return server.Text(stringutil.Concat("Long running operation completed. Duration: ", strconv.FormatFloat(duration, 'g', -1, 64), " seconds, Steps: ", strconv.Itoa(n), "."))
+	return server.Text__0(stringutil.Concat("Long running operation completed. Duration: ", strconv.FormatFloat(duration, 'g', -1, 64), " seconds, Steps: ", strconv.Itoa(n), "."))
 }
 func (this *longrun) Classclone() server.ToolProto {
 	_gop_ret := *this
