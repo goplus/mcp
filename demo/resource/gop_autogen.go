@@ -29,7 +29,7 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Resource Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	server.Gopt_MCPApp_Main(this, []server.ResourceProto{new(readme), new(user_profile)}, []server.ToolProto{}, []server.PromptProto{})
+	server.Gopt_MCPApp_Main(this, []server.ResourceProto{new(readme), new(user_profile)}, nil, nil)
 }
 //line demo/resource/readme_res.gox:5
 func (this *readme) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadResourceRequest, _gop_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
