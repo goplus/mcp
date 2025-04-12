@@ -182,6 +182,16 @@ func (p *ToolApp) Array(name string, fn ...func()) {
 	p.ToolAppProto = op
 }
 
+// Set adds an array property to the tool schema with unique items.
+func (p *ToolApp) Set(name string, fn ...func()) {
+	p.Array(name, func() {
+		p.opts = append(p.opts, mcp.UniqueItems(true))
+		if len(fn) > 0 {
+			fn[0]()
+		}
+	})
+}
+
 // Object adds an object property to the tool schema.
 // It accepts property options to configure the object property's behavior
 // and constraints.
@@ -306,14 +316,6 @@ func (p *ToolApp) Pattern(pattern string) {
 		panic("pattern: not a string property")
 	}
 	p.opts = append(p.opts, mcp.Pattern(pattern))
-}
-
-// Unique specifies that the array property must contain unique items.
-func (p *ToolApp) Unique() {
-	if p.kind != kindArray {
-		panic("unique: not an array property")
-	}
-	p.opts = append(p.opts, mcp.UniqueItems(true))
 }
 
 // Title adds a display-friendly title to a property in the JSON Schema.
