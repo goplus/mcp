@@ -21,6 +21,7 @@ import (
 	"maps"
 	"testing"
 
+	"github.com/goplus/mcp/mtest/rtx"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/qiniu/x/test"
 )
@@ -48,8 +49,8 @@ func (p *CaseApp) Req__1() *Request {
 }
 
 // Initialize creates a new request to initialize the MCP server.
-func (p *CaseApp) Initialize(params map[string]any) *Request {
-	return p.Req__0("initialize").Params(mapJoin(map[string]any{
+func (p *CaseApp) Initialize(params rtx.M) *Request {
+	return p.Req__0("initialize").Params(mapJoin(rtx.M{
 		"protocolVersion": mcp.LATEST_PROTOCOL_VERSION,
 		"capabilities": map[string]any{
 			"roots":    map[string]any{"listChanged": true},
@@ -73,8 +74,8 @@ func (p *CaseApp) List__0(what string) *Request {
 }
 
 // List creates a new request to list resources, resources/templates, prompts or tools.
-func (p *CaseApp) List__1(what string, args map[string]any) *Request {
-	return p.Req__0(what + "/list").Params(args)
+func (p *CaseApp) List__1(what string, params rtx.M) *Request {
+	return p.Req__0(what + "/list").Params(params)
 }
 
 // Read creates a new request to read a resource.
@@ -137,35 +138,25 @@ func (p *CaseApp) SetLevel(level mcp.LoggingLevel) *Request {
 }
 
 // Complete creates a new request to complete a prompt or resource.
-func (p *CaseApp) Complete(args map[string]any) *Request {
+func (p *CaseApp) Complete(args rtx.M) *Request {
 	return p.Req__0("completion/complete").Params(args)
 }
 
 // OnNotify registers a notification handler.
-func (p *CaseApp) OnNotify__0(method string, notify func(params map[string]any)) {
-	p.client.OnNotification(func(in mcp.JSONRPCNotification) {
-		if method == in.Method {
-			notify(makeParams(in.Params.Meta, in.Params.AdditionalFields))
+func (p *CaseApp) OnNotify__0(method string, notify func(params rtx.M)) {
+	p.rt.OnNotify(func(methodIn string, params rtx.M) {
+		if method == methodIn {
+			notify(params)
 		}
 	})
 }
 
 // OnNotify registers a notification handler.
-func (p *CaseApp) OnNotify__1(notify func(method string, params map[string]any)) {
-	p.client.OnNotification(func(in mcp.JSONRPCNotification) {
-		notify(in.Method, makeParams(in.Params.Meta, in.Params.AdditionalFields))
-	})
+func (p *CaseApp) OnNotify__1(notify func(method string, params rtx.M)) {
+	p.rt.OnNotify(notify)
 }
 
-func makeParams(meta, addition map[string]any) map[string]any {
-	if meta == nil {
-		return addition
-	}
-	m := make(map[string]any, len(addition)+1)
-	maps.Copy(m, addition)
-	m["_meta"] = meta
-	return m
-}
+// -----------------------------------------------------------------------------
 
 func mapJoin(a, b map[string]any) map[string]any {
 	if a == nil {

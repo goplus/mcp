@@ -24,6 +24,8 @@ import (
 	"os"
 	"testing"
 
+	"github.com/goplus/mcp/mtest/rtx"
+	"github.com/goplus/mcp/mtest/sse"
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/server"
 )
@@ -65,8 +67,7 @@ func Gopt_MainApp_TestMain(app any, m *testing.M) {
 
 // App is the application for MCP Server testing.
 type App struct {
-	client  *client.SSEMCPClient
-	baseURL string
+	rt rtx.RoundTripper
 }
 
 func (p *App) initApp() *App {
@@ -74,9 +75,9 @@ func (p *App) initApp() *App {
 }
 
 func (p *App) shutdown() {
-	if p.client != nil {
-		p.client.Close()
-		p.client = nil
+	if rt := p.rt; rt != nil {
+		p.rt = nil
+		rt.Close()
 	}
 }
 
@@ -96,16 +97,17 @@ func (p *App) TestServer__1(path string, app MCPAppType) {
 	app.SetLAS(func(addr string, svr *server.MCPServer) (err error) {
 		ts := server.NewTestServer(svr)
 		log.Println("Serving MCP server at", ts.URL)
-		p.baseURL = ts.URL + path
-		p.client, err = client.NewSSEMCPClient(p.baseURL)
+		baseURL := ts.URL + path
+		client, err := client.NewSSEMCPClient(baseURL)
 		if err != nil {
 			log.Println("NewSSEMCPClient:", err)
 			return
 		}
-		err = p.client.Start(context.Background())
+		err = client.Start(context.Background())
 		if err != nil {
 			log.Println("SSEMCPClient.Start:", err)
 		}
+		p.rt = sse.New(client)
 		return
 	})
 	app.Main()
