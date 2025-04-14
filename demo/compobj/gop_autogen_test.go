@@ -13,7 +13,7 @@ type case_compobj struct {
 //line demo/compobj/compobj_mtest.gox:1
 func (this *case_compobj) Main() {
 //line demo/compobj/compobj_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
+	this.Mock(new(MCPApp))
 //line demo/compobj/compobj_mtest.gox:3:1
 	this.Initialize(nil)
 //line demo/compobj/compobj_mtest.gox:4:1

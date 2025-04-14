@@ -13,7 +13,7 @@ type case_calc struct {
 //line demo/calc/calc_mtest.gox:1
 func (this *case_calc) Main() {
 //line demo/calc/calc_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
+	this.Mock(new(MCPApp))
 //line demo/calc/calc_mtest.gox:3:1
 	this.Initialize(nil)
 //line demo/calc/calc_mtest.gox:4:1

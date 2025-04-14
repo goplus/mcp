@@ -32,17 +32,17 @@ type Transport struct {
 	client *client.SSEMCPClient
 }
 
-func New(client *client.SSEMCPClient) *Transport {
-	return &Transport{
+func New(client *client.SSEMCPClient) Transport {
+	return Transport{
 		client: client,
 	}
 }
 
-func (p *Transport) Close() error {
+func (p Transport) Close() error {
 	return p.client.Close()
 }
 
-func (p *Transport) OnNotify(notify func(method string, params rtx.M)) {
+func (p Transport) OnNotify(notify func(method string, params rtx.M)) {
 	p.client.OnNotification(func(in mcp.JSONRPCNotification) {
 		notify(in.Method, makeParams(in.Params.Meta, in.Params.AdditionalFields))
 	})
@@ -63,7 +63,7 @@ type jsonrpcRequest struct {
 	Params rtx.M  `json:"params,omitempty"`
 }
 
-func (p *Transport) RoundTrip(ctx context.Context, method string, params rtx.M) (ret rtx.M, err error) {
+func (p Transport) RoundTrip(ctx context.Context, method string, params rtx.M) (ret rtx.M, err error) {
 	if fn, ok := routes[method]; ok {
 		req, e := json.Marshal(jsonrpcRequest{method, params})
 		if e != nil {

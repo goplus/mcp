@@ -24,6 +24,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/goplus/mcp/mtest/mock"
 	"github.com/goplus/mcp/mtest/rtx"
 	"github.com/goplus/mcp/mtest/sse"
 	"github.com/mark3labs/mcp-go/client"
@@ -85,6 +86,16 @@ func (p *App) shutdown() {
 type MCPAppType interface {
 	SetLAS(las func(addr string, svr *server.MCPServer) error)
 	Main()
+}
+
+// Mock runs a MCP server by a mock transport.
+func (p *App) Mock(app MCPAppType) {
+	app.SetLAS(func(addr string, svr *server.MCPServer) (err error) {
+		p.rt = mock.New(svr)
+		log.Println("Mocking MCP server")
+		return nil
+	})
+	app.Main()
 }
 
 // TestServer runs a MCP server by httptest.Server.

@@ -1,4 +1,4 @@
-testServer new(MCPApp)
+mock new(MCPApp)
 
 initialize nil
 ret {}

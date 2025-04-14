@@ -13,7 +13,7 @@ type case_user_profile struct {
 //line demo/resource/user_profile_mtest.gox:1
 func (this *case_user_profile) Main() {
 //line demo/resource/user_profile_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
+	this.Mock(new(MCPApp))
 //line demo/resource/user_profile_mtest.gox:3:1
 	this.Initialize(nil)
 //line demo/resource/user_profile_mtest.gox:4:1
