@@ -13,7 +13,7 @@ type case_longrun struct {
 //line demo/longruntool/longrun_mtest.gox:1
 func (this *case_longrun) Main() {
 //line demo/longruntool/longrun_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
+	this.Mock(new(MCPApp))
 //line demo/longruntool/longrun_mtest.gox:3:1
 	this.Initialize(nil)
 //line demo/longruntool/longrun_mtest.gox:4:1

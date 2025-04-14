@@ -20,6 +20,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"maps"
 	"sync/atomic"
 
 	"github.com/goplus/mcp/mtest/rtx"
@@ -28,31 +29,87 @@ import (
 )
 
 // -----------------------------------------------------------------------------
+// implement ClientSession
+
+func (p *Transport) Initialize() {
+	panic("unreachable")
+}
+
+func (p *Transport) Initialized() bool {
+	return true
+}
+
+func (p *Transport) NotificationChannel() chan<- mcp.JSONRPCNotification {
+	return p.ch
+}
+
+func (p *Transport) SessionID() string {
+	panic("unreachable")
+}
+
+// -----------------------------------------------------------------------------
+
+type notifyNode struct {
+	notify func(method string, params rtx.M)
+	prev   *notifyNode
+}
 
 type Transport struct {
-	svr *server.MCPServer
+	svr       *server.MCPServer
+	ch        chan<- mcp.JSONRPCNotification
+	notify    atomic.Pointer[notifyNode]
+	requestID atomic.Int64
 }
 
-func New(svr *server.MCPServer) Transport {
-	return Transport{
+func New(svr *server.MCPServer) *Transport {
+	ch := make(chan mcp.JSONRPCNotification, 8)
+	ret := &Transport{
 		svr: svr,
+		ch:  ch,
 	}
+	go func(ch chan mcp.JSONRPCNotification, t *Transport) {
+		for in := range ch {
+			for lst := ret.notify.Load(); lst != nil; lst = lst.prev {
+				lst.notify(in.Method, makeParams(in.Params.Meta, in.Params.AdditionalFields))
+			}
+		}
+	}(ch, ret)
+	return ret
 }
 
-func (p Transport) Close() error {
+func makeParams(meta, addition rtx.M) rtx.M {
+	if meta == nil {
+		return addition
+	}
+	m := make(rtx.M, len(addition)+1)
+	maps.Copy(m, addition)
+	m["_meta"] = meta
+	return m
+}
+
+func (p *Transport) Close() error {
+	if ch := p.ch; ch != nil {
+		p.ch = nil
+		close(ch)
+	}
 	return nil
 }
 
-func (p Transport) OnNotify(notify func(method string, params rtx.M)) {
-	panic("todo")
+func (p *Transport) OnNotify(notify func(method string, params rtx.M)) {
+	n := &notifyNode{
+		notify: notify,
+	}
+	for {
+		prev := p.notify.Load()
+		n.prev = prev
+		if p.notify.CompareAndSwap(prev, n) {
+			break
+		}
+	}
 }
 
-var (
-	requestID atomic.Int64
-)
-
-func (p Transport) RoundTrip(ctx context.Context, method string, params rtx.M) (ret rtx.M, err error) {
-	id := requestID.Add(1)
+func (p *Transport) RoundTrip(ctx context.Context, method string, params rtx.M) (ret rtx.M, err error) {
+	id := p.requestID.Add(1)
 	request := mcp.JSONRPCRequest{
 		JSONRPC: mcp.JSONRPC_VERSION,
 		ID:      id,
@@ -65,7 +122,9 @@ func (p Transport) RoundTrip(ctx context.Context, method string, params rtx.M) (
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
-	resp := p.svr.HandleMessage(ctx, requestBytes)
+	svr := p.svr
+	svr.WithContext(ctx, p)
+	resp := svr.HandleMessage(ctx, requestBytes)
 	switch resp := resp.(type) {
 	case mcp.JSONRPCResponse:
 		b, e := json.Marshal(resp.Result)
