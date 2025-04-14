@@ -29,7 +29,7 @@ func (this *case_code_review) Main() {
 //line demo/prompt/greeting_mtest.gox:1
 func (this *case_greeting) Main() {
 //line demo/prompt/greeting_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
+	this.Mock(new(MCPApp))
 //line demo/prompt/greeting_mtest.gox:3:1
 	this.Initialize(nil)
 //line demo/prompt/greeting_mtest.gox:4:1

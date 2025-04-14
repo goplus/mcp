@@ -14,7 +14,7 @@ type case_hello struct {
 //line demo/hello/hello_mtest.gox:1
 func (this *case_hello) Main() {
 //line demo/hello/hello_mtest.gox:1:1
-	this.TestServer__0(new(MCPApp))
+	this.Mock(new(MCPApp))
 //line demo/hello/hello_mtest.gox:3:1
 	this.Initialize(nil)
 //line demo/hello/hello_mtest.gox:4:1
