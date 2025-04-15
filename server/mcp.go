@@ -260,21 +260,25 @@ func Gopt_MCPApp_Main(app iAppProto, resources []ResourceProto, tools []ToolProt
 	app.MainEntry()
 	svr := app.Sys()
 	for _, r := range resources {
-		reflect.ValueOf(r).Elem().Field(1).Set(reflect.ValueOf(app)) // (*ResourceApp).App = app
+		initProj(r, app)
 		r.addTo(r, svr)
 	}
 	for _, h := range tools {
-		reflect.ValueOf(h).Elem().Field(1).Set(reflect.ValueOf(app)) // (*ToolApp).App = app
+		initProj(h, app)
 		h.addTo(h, svr)
 	}
 	for _, p := range prompts {
-		reflect.ValueOf(p).Elem().Field(1).Set(reflect.ValueOf(app)) // (*PromptApp).App = app
+		initProj(p, app)
 		p.addTo(p, svr)
 	}
 	err := app.serve()
 	if err != nil {
 		log.Panicln(err)
 	}
+}
+
+func initProj(work, app any) {
+	reflect.ValueOf(work).Elem().Field(1).Set(reflect.ValueOf(app))
 }
 
 // -----------------------------------------------------------------------------
