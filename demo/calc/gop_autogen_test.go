@@ -19,9 +19,17 @@ func (this *case_calc) Main() {
 //line demo/calc/calc_mtest.gox:4:1
 	this.RetWith(map[string]interface{}{})
 //line demo/calc/calc_mtest.gox:6:1
-	this.Call__0("mul", map[string]any{"x": 2, "y": 3})
+	this.Call__0("calculate", map[string]any{"operation": "multiply", "x": 2, "y": 3})
 //line demo/calc/calc_mtest.gox:7:1
-	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "multiply result:", "type": "text"}, map[string]string{"text": "6", "type": "text"}}})
+	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "6", "type": "text"}}})
+//line demo/calc/calc_mtest.gox:16:1
+	this.Call__0("calculate", map[string]any{"operation": "add", "x": 2, "y": 3})
+//line demo/calc/calc_mtest.gox:17:1
+	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "5", "type": "text"}}})
+//line demo/calc/calc_mtest.gox:26:1
+	this.Call__0("calculate", map[string]any{"operation": "divide", "x": 2, "y": 0})
+//line demo/calc/calc_mtest.gox:27:1
+	this.RetWith(map[string]interface{}{"content": []map[string]string{map[string]string{"text": "cannot divide by zero", "type": "text"}}, "isError": true})
 }
 func Test_calc(t *testing.T) {
 	mtest.Gopt_CaseApp_TestMain(new(case_calc), t)

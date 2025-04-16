@@ -37,7 +37,8 @@ const (
 // -----------------------------------------------------------------------------
 
 type multiContents struct {
-	data []mcp.Content
+	data  []mcp.Content
+	isErr bool
 	mcp.Content
 }
 
@@ -118,6 +119,30 @@ func Multiple(contents ...mcp.Content) mcp.Content {
 	return &multiContents{
 		data: contents,
 	}
+}
+
+// NewError creates a new content with an error message.
+// Any errors that originate from the tool SHOULD be reported inside the result object.
+func NewError__0(text string) mcp.Content {
+	return &multiContents{
+		data: []mcp.Content{
+			mcp.TextContent{
+				Type: "text",
+				Text: text,
+			},
+		},
+		isErr: true,
+	}
+}
+
+// NewError creates a new content with an error message.
+// If an error is provided, its details will be appended to the text message.
+// Any errors that originate from the tool SHOULD be reported inside the result object.
+func NewError__1(text string, err error) mcp.Content {
+	if err != nil {
+		text = text + ": " + err.Error()
+	}
+	return NewError__0(text)
 }
 
 // -----------------------------------------------------------------------------

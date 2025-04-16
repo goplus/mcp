@@ -8,7 +8,7 @@ tool "helloWorld", => {
 
 name, ok := ${name}.(string)
 if !ok {
-	panic "name must be a string"
+	return newError("name must be a string")
 }
 
 return text("Hello, ${name}!")
