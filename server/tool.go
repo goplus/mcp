@@ -114,6 +114,11 @@ func (p *ToolApp) Description(description string) {
 	}
 }
 
+// Annotation adds an annotation to the Tool.
+func (p *ToolApp) Annotation(annotation mcp.ToolAnnotation) {
+	mcp.WithToolAnnotation(annotation)(&p.tool)
+}
+
 // String adds a string property to the tool schema.
 // It accepts property options to configure the string property's behavior
 // and constraints.
