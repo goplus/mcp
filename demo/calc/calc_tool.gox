@@ -28,9 +28,9 @@ case "multiply":
 	return number(x * y)
 case "divide":
 	if y == 0 {
-		return withError("cannot divide by zero")
+		return newError("cannot divide by zero")
 	}
 	return number(x / y)
 default:
-	return withError("invalid operation")
+	return newError("invalid operation")
 }

@@ -85,14 +85,14 @@ func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest,
 //line demo/calc/calc_tool.gox:30:1
 		if y == 0 {
 //line demo/calc/calc_tool.gox:31:1
-			return server.WithError__0("cannot divide by zero")
+			return server.NewError__0("cannot divide by zero")
 		}
 //line demo/calc/calc_tool.gox:33:1
 		return server.Number__0(x / y)
 //line demo/calc/calc_tool.gox:34:1
 	default:
 //line demo/calc/calc_tool.gox:35:1
-		return server.WithError__0("invalid operation")
+		return server.NewError__0("invalid operation")
 	}
 }
 func (this *calc) Classclone() server.ToolProto {

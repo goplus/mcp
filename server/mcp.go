@@ -121,9 +121,9 @@ func Multiple(contents ...mcp.Content) mcp.Content {
 	}
 }
 
-// WithError creates a new content with an error message.
+// NewError creates a new content with an error message.
 // Any errors that originate from the tool SHOULD be reported inside the result object.
-func WithError__0(text string) mcp.Content {
+func NewError__0(text string) mcp.Content {
 	return &multiContents{
 		data: []mcp.Content{
 			mcp.TextContent{
@@ -135,14 +135,14 @@ func WithError__0(text string) mcp.Content {
 	}
 }
 
-// WithError creates a new content with an error message.
+// NewError creates a new content with an error message.
 // If an error is provided, its details will be appended to the text message.
 // Any errors that originate from the tool SHOULD be reported inside the result object.
-func WithError__1(text string, err error) mcp.Content {
+func NewError__1(text string, err error) mcp.Content {
 	if err != nil {
 		text = text + ": " + err.Error()
 	}
-	return WithError__0(text)
+	return NewError__0(text)
 }
 
 // -----------------------------------------------------------------------------
