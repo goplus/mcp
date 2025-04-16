@@ -295,7 +295,7 @@ func (p *ToolApp) Minlen(n int) {
 // The number value must be divisible by this value.
 func (p *ToolApp) MultipleOf(value float64) {
 	if p.kind != kindNumber {
-		panic("multipleof: not a number property")
+		panic("multipleOf: not a number property")
 	}
 	p.opts = append(p.opts, mcp.MultipleOf(value))
 }

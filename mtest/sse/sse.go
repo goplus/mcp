@@ -29,10 +29,10 @@ import (
 // -----------------------------------------------------------------------------
 
 type Transport struct {
-	client *client.SSEMCPClient
+	client *client.Client
 }
 
-func New(client *client.SSEMCPClient) Transport {
+func New(client *client.Client) Transport {
 	return Transport{
 		client: client,
 	}
@@ -83,88 +83,88 @@ func (p Transport) RoundTrip(ctx context.Context, method string, params rtx.M) (
 	return nil, rtx.ErrUnknownMethod
 }
 
-var routes = map[string]func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error){
-	"initialize": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+var routes = map[string]func(c *client.Client, ctx context.Context, req []byte) (any, error){
+	"initialize": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.InitializeRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.Initialize(ctx, in)
 	},
-	"ping": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"ping": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		return nil, c.Ping(ctx)
 	},
-	"resources/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"resources/list": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.ListResourcesRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.ListResources(ctx, in)
 	},
-	"resources/templates/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"resources/templates/list": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.ListResourceTemplatesRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.ListResourceTemplates(ctx, in)
 	},
-	"resources/read": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"resources/read": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.ReadResourceRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.ReadResource(ctx, in)
 	},
-	"resources/subscribe": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"resources/subscribe": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.SubscribeRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return nil, c.Subscribe(ctx, in)
 	},
-	"resources/unsubscribe": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"resources/unsubscribe": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.UnsubscribeRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return nil, c.Unsubscribe(ctx, in)
 	},
-	"prompts/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"prompts/list": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.ListPromptsRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.ListPrompts(ctx, in)
 	},
-	"prompts/get": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"prompts/get": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.GetPromptRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.GetPrompt(ctx, in)
 	},
-	"tools/list": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"tools/list": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.ListToolsRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.ListTools(ctx, in)
 	},
-	"tools/call": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"tools/call": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.CallToolRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return c.CallTool(ctx, in)
 	},
-	"logging/setLevel": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"logging/setLevel": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.SetLevelRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
 		}
 		return nil, c.SetLevel(ctx, in)
 	},
-	"completion/complete": func(c *client.SSEMCPClient, ctx context.Context, req []byte) (any, error) {
+	"completion/complete": func(c *client.Client, ctx context.Context, req []byte) (any, error) {
 		var in mcp.CompleteRequest
 		if err := json.Unmarshal(req, &in); err != nil {
 			return nil, err
