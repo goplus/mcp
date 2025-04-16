@@ -3,16 +3,33 @@ mock new(MCPApp)
 initialize nil
 ret {}
 
-call "mul", {"x": 2, "y": 3}
+call "calculate", {"operation": "multiply", "x": 2, "y": 3}
 ret {
 	"content": [
-		{
-			"text": "multiply result:",
-			"type": "text",
-		},
 		{
 			"text": "6",
 			"type": "text",
 		},
 	],
+}
+
+call "calculate", {"operation": "add", "x": 2, "y": 3}
+ret {
+	"content": [
+		{
+			"text": "5",
+			"type": "text",
+		},
+	],
+}
+
+call "calculate", {"operation": "divide", "x": 2, "y": 0}
+ret {
+	"content": [
+		{
+			"text": "cannot divide by zero",
+			"type": "text",
+		},
+	],
+	"isError": true,
 }

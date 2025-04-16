@@ -47,7 +47,7 @@ func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest
 //line demo/hello/hello_tool.gox:10:1
 	if !ok {
 //line demo/hello/hello_tool.gox:11:1
-		panic("name must be a string")
+		return server.WithError__0("name must be a string")
 	}
 //line demo/hello/hello_tool.gox:14:1
 	return server.Text__0(stringutil.Concat("Hello, ", name, "!"))

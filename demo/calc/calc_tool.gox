@@ -1,22 +1,36 @@
-tool "mul", => {
-	description "Multiply two numbers"
+tool "calculate", => {
+	description "Perform basic arithmetic operations"
+	string "operation", => {
+		required
+		description "The operation to perform (add, subtract, multiply, divide)"
+		enum "add", "subtract", "multiply", "divide"
+	}
 	float "x", => {
 		required
-		description "One of multiplicative parameters"
+		description "First number"
 	}
 	float "y", => {
 		required
-		description "One of multiplicative parameters"
+		description "Second number"
 	}
 }
 
-x, ok1 := ${x}.(float64)
-y, ok2 := ${y}.(float64)
-if !ok1 || !ok2 {
-	panic "multiplicative parameters x and y must be numbers"
-}
+op := ${operation}.(string)
+x := ${x}.(float64)
+y := ${y}.(float64)
 
-return multiple(
-	text("multiply result:"),
-	number(x*y),
-)
+switch op {
+case "add":
+	return number(x + y)
+case "subtract":
+	return number(x - y)
+case "multiply":
+	return number(x * y)
+case "divide":
+	if y == 0 {
+		return withError("cannot divide by zero")
+	}
+	return number(x / y)
+default:
+	return withError("invalid operation")
+}
