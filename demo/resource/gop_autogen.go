@@ -72,7 +72,6 @@ func (this *user_profile) getUserProfile(userID string) (interface{}, error) {
 }
 //line demo/resource/user_profile_res.gox:10
 func (this *user_profile) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadResourceRequest, _gop_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
-//line demo/resource/user_profile_res.gox:5:1
 	this.ResourceApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/resource/user_profile_res.gox:10:1
 	this.Resource("users://{id}/profile", "User Profile", func() {

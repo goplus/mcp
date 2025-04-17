@@ -30,7 +30,6 @@ func (this *MCPApp) Main() {
 }
 //line demo/longruntool/longrun_tool.gox:3
 func (this *longrun) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-//line demo/longruntool/longrun_mtest.gox:28:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/longruntool/longrun_tool.gox:3:1
 	this.Tool("longRunningOperation", func() {

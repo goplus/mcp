@@ -28,7 +28,6 @@ func (this *MCPApp) Main() {
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-//line demo/hello/hello_mtest.gox:36:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/hello/hello_tool.gox:1:1
 	this.Tool("helloWorld", func() {

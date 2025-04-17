@@ -27,7 +27,6 @@ func (this *MCPApp) Main() {
 }
 //line demo/compobj/compobj_tool.gox:1
 func (this *compobj) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-//line demo/compobj/compobj_mtest.gox:69:1
 	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/compobj/compobj_tool.gox:1:1
 	this.Tool("compositeObject", func() {
