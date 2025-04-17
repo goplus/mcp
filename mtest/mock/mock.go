@@ -31,7 +31,6 @@ import (
 // implement ClientSession
 
 func (p *Transport) Initialize() {
-	panic("unreachable")
 }
 
 func (p *Transport) Initialized() bool {
@@ -112,7 +111,7 @@ func (p *Transport) RoundTrip(ctx context.Context, method string, params rtx.M) 
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 	svr := p.svr
-	svr.WithContext(ctx, p)
+	ctx = svr.WithContext(ctx, p)
 	resp := svr.HandleMessage(ctx, requestBytes)
 	switch resp := resp.(type) {
 	case mcp.JSONRPCResponse:
