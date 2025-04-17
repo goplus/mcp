@@ -26,8 +26,7 @@ import (
 
 	"github.com/goplus/mcp/mtest/mock"
 	"github.com/goplus/mcp/mtest/rtx"
-	"github.com/goplus/mcp/mtest/sse"
-	"github.com/mark3labs/mcp-go/client"
+	"github.com/mark3labs/mcp-go/client/transport"
 	"github.com/mark3labs/mcp-go/server"
 )
 
@@ -109,7 +108,7 @@ func (p *App) TestServer__1(path string, app MCPAppType) {
 		ts := server.NewTestServer(svr)
 		log.Println("Serving MCP server at", ts.URL)
 		baseURL := ts.URL + path
-		client, err := client.NewSSEMCPClient(baseURL)
+		client, err := transport.NewSSE(baseURL)
 		if err != nil {
 			log.Println("NewSSEMCPClient:", err)
 			return
@@ -118,7 +117,7 @@ func (p *App) TestServer__1(path string, app MCPAppType) {
 		if err != nil {
 			log.Println("SSEMCPClient.Start:", err)
 		}
-		p.rt = sse.New(client)
+		p.rt = rtx.New(client)
 		return
 	})
 	app.Main()
