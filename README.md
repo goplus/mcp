@@ -20,6 +20,8 @@ The classfile [mcp](#mcp-mcp-server-framework) has the file suffix `_mcp.gox` (t
 
 Here is a MCP Server example. It has two files: `main_mcp.gox` (the MCP Server) and `hello_tool.gox` (a MCP Tool).
 
+### A MCP Server Example: hello
+
 First let us initialize a hello project:
 
 ```
@@ -68,4 +70,18 @@ A simplest MCP Server is running now.
 
 ## mcptest: MCP Server Test Framework
 
-TODO
+To test the above [hello MCP Server](#a-mcp-server-example-hello), you only need to implement a `hello_mtest.gox` file:
+
+```go
+mock new(MCPApp)
+
+initialize nil
+ret {}
+
+call "helloWorld", {"name": "Ken"}
+ret {
+	"content": [{"type": "text", "text": "Hello, Ken!"}],
+}
+```
+
+Then run `gop test` or `gop test -v` to execute the unit test.
