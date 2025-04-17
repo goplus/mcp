@@ -20,7 +20,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"maps"
 	"sync/atomic"
 
 	"github.com/goplus/mcp/mtest/rtx"
@@ -70,21 +69,11 @@ func New(svr *server.MCPServer) *Transport {
 	go func(ch chan mcp.JSONRPCNotification, t *Transport) {
 		for in := range ch {
 			for lst := ret.notify.Load(); lst != nil; lst = lst.prev {
-				lst.notify(in.Method, makeParams(in.Params.Meta, in.Params.AdditionalFields))
+				lst.notify(in.Method, rtx.Params(in.Params.Meta, in.Params.AdditionalFields))
 			}
 		}
 	}(ch, ret)
 	return ret
-}
-
-func makeParams(meta, addition rtx.M) rtx.M {
-	if meta == nil {
-		return addition
-	}
-	m := make(rtx.M, len(addition)+1)
-	maps.Copy(m, addition)
-	m["_meta"] = meta
-	return m
 }
 
 func (p *Transport) Close() error {
@@ -133,7 +122,7 @@ func (p *Transport) RoundTrip(ctx context.Context, method string, params rtx.M) 
 		}
 		err = json.Unmarshal(b, &ret)
 	case mcp.JSONRPCError:
-		err = &jsonrpcError{
+		err = &rtx.Error{
 			Code:    resp.Error.Code,
 			Message: resp.Error.Message,
 		}
@@ -141,15 +130,6 @@ func (p *Transport) RoundTrip(ctx context.Context, method string, params rtx.M) 
 		panic("unexpected response type")
 	}
 	return
-}
-
-type jsonrpcError struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-}
-
-func (p *jsonrpcError) Error() string {
-	return fmt.Sprintf("code: %d, message: %s", p.Code, p.Message)
 }
 
 // -----------------------------------------------------------------------------
