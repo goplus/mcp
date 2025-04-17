@@ -18,7 +18,7 @@ The classfile [mcp](#mcp-mcp-server-framework) has the file suffix `_mcp.gox` (t
 
 ## mcp: MCP Server Framework
 
-Here is a MCP Server example. It has two files: `main_mcp.gox` (the MCP Server) and `hello_tool.gox` (a MCP Tool).
+Here is a MCP Server example ([source code](demo/hello)). It has two files: `main_mcp.gox` (the MCP Server) and `hello_tool.gox` (a MCP Tool).
 
 ### A MCP Server Example: hello
 
@@ -70,7 +70,7 @@ A simplest MCP Server is running now.
 
 ## mcptest: MCP Server Test Framework
 
-To test the above [hello MCP Server](#a-mcp-server-example-hello), you only need to implement a `hello_mtest.gox` file:
+To test the above [hello MCP Server](#a-mcp-server-example-hello) ([source code](demo/hello)), you only need to implement a `hello_mtest.gox` file:
 
 ```go
 mock new(MCPApp)
