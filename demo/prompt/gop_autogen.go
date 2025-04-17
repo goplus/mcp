@@ -32,7 +32,6 @@ func (this *MCPApp) Main() {
 }
 //line demo/prompt/code_review_prompt.gox:1
 func (this *code_review) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
-//line demo/prompt/code_review_mtest.gox:7:1
 	this.PromptApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/prompt/code_review_prompt.gox:1:1
 	this.Prompt__0("codeReview", func() {
@@ -62,7 +61,6 @@ func (this *code_review) Classclone() server.PromptProto {
 }
 //line demo/prompt/greeting_prompt.gox:1
 func (this *greeting) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
-//line demo/prompt/greeting_mtest.gox:7:1
 	this.PromptApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
 //line demo/prompt/greeting_prompt.gox:1:1
 	this.Prompt__0("greeting", func() {
