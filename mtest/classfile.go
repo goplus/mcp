@@ -31,7 +31,7 @@ import (
 )
 
 const (
-	GopPackage   = "github.com/goplus/yap/test"
+	GopPackage   = "github.com/qiniu/x/test"
 	GopTestClass = true
 )
 
