@@ -205,7 +205,7 @@ type withContext struct {
 }
 
 // Notify sends a notification to the current client
-func (p withContext) Notify(method string, params map[string]any) {
+func (p *withContext) Notify(method string, params map[string]any) {
 	p.svr.SendNotificationToClient(p.ctx, method, params)
 }
 
