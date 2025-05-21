@@ -100,7 +100,7 @@ func (p *Transport) RoundTrip(ctx context.Context, method string, params rtx.M) 
 	id := p.requestID.Add(1)
 	request := mcp.JSONRPCRequest{
 		JSONRPC: mcp.JSONRPC_VERSION,
-		ID:      id,
+		ID:      mcp.NewRequestId(id),
 		Request: mcp.Request{
 			Method: method,
 		},

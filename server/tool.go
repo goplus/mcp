@@ -38,6 +38,7 @@ type ToolApp struct {
 	*ToolAppProto
 	withContext
 	request mcp.CallToolRequest
+	args    map[string]any
 	isClone bool
 }
 
@@ -59,7 +60,7 @@ func (p *ToolApp) MetaProgressToken() mcp.ProgressToken {
 
 // Gop_Env returns the value of the specified parameter.
 func (p *ToolApp) Gop_Env(name string) any {
-	return p.request.Params.Arguments[name]
+	return p.args[name]
 }
 
 // Main is required by Go+ compiler as the entry of a MCPServer tool.
@@ -67,6 +68,7 @@ func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *Tool
 	if t == nil {
 		p.ctx = ctx
 		p.request = request
+		p.args = request.GetArguments()
 		p.isClone = true
 	} else {
 		p.ToolAppProto = t
