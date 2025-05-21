@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	github.com/mark3labs/mcp-go v0.29.0
-	github.com/qiniu/x v1.13.19
+	github.com/qiniu/x v1.14.6
 	github.com/yosida95/uritemplate/v3 v3.0.2
 )
 
