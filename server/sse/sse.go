@@ -62,16 +62,17 @@ func NewServer(addr string, svr *server.MCPServer) (ret *http.Server, err error)
 	if err != nil {
 		return
 	}
-	sse := server.NewSSEServer(svr)
+	options := make([]server.SSEOption, 0, 3)
 	if opts.Path != "" {
-		server.WithBasePath(opts.Path)(sse)
+		options = append(options, server.WithStaticBasePath(opts.Path))
 	}
 	if opts.Endpoint != "" {
-		server.WithSSEEndpoint(opts.Endpoint)(sse)
+		options = append(options, server.WithSSEEndpoint(opts.Endpoint))
 	}
 	if opts.MsgEndpoint != "" {
-		server.WithMessageEndpoint(opts.MsgEndpoint)(sse)
+		options = append(options, server.WithMessageEndpoint(opts.MsgEndpoint))
 	}
+	sse := server.NewSSEServer(svr, options...)
 	return &http.Server{Addr: opts.Host, Handler: sse}, nil
 }
 
