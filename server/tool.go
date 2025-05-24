@@ -63,7 +63,7 @@ func (p *ToolApp) Gop_Env(name string) any {
 	return p.args[name]
 }
 
-// Main is required by Go+ compiler as the entry of a MCPServer tool.
+// Main is required by XGo compiler as the entry of a MCPServer tool.
 func (p *ToolApp) Main(ctx context.Context, request mcp.CallToolRequest, t *ToolAppProto) mcp.Content {
 	if t == nil {
 		p.ctx = ctx

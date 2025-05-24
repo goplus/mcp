@@ -23,7 +23,7 @@ func (this *case_compobj) Main() {
 //line demo/compobj/compobj_mtest.gox:7:1
 	this.RetWith(map[string][]map[string]interface{}{"tools": []map[string]interface{}{map[string]interface{}{"name": "compositeObject", "description": "A composite object tool", "inputSchema": map[string]interface{}{"type": "object", "properties": map[string]interface{}{"name": map[string]string{"description": "User name", "type": "string"}, "profile": map[string]interface{}{"description": "User profile", "type": "object", "properties": map[string]interface{}{"age": map[string]string{"type": "number"}, "works": map[string]interface{}{"description": "Work experience", "type": "array", "items": map[string]interface{}{"type": "object", "properties": map[string]map[string]string{"company": map[string]string{"description": "Company name", "type": "string"}, "end": map[string]string{"description": "End time", "type": "string"}, "start": map[string]string{"description": "Start time", "type": "string"}}}}}}}, "required": []string{"name", "profile"}}}}})
 //line demo/compobj/compobj_mtest.gox:59:1
-	this.Call__0("compositeObject", map[string]any{"name": "Ken", "profile": map[string]interface{}{"age": 25, "works": []map[string]string{map[string]string{"company": "Go+ Limited", "start": "2020-5-23"}}}})
+	this.Call__0("compositeObject", map[string]any{"name": "Ken", "profile": map[string]interface{}{"age": 25, "works": []map[string]string{map[string]string{"company": "XGo Limited", "start": "2020-5-23"}}}})
 //line demo/compobj/compobj_mtest.gox:68:1
 	this.Send()
 //line demo/compobj/compobj_mtest.gox:69:1
