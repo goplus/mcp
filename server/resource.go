@@ -68,7 +68,7 @@ func (p *ResourceApp) Gop_Env(name string) any {
 	return nil
 }
 
-// Main is required by Go+ compiler as the entry of a MCPServer resource.
+// Main is required by XGo compiler as the entry of a MCPServer resource.
 func (p *ResourceApp) Main(ctx context.Context, request mcp.ReadResourceRequest, t *ResourceAppProto) []mcp.ResourceContents {
 	if t == nil {
 		p.ctx = ctx

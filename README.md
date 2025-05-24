@@ -1,18 +1,18 @@
-MCP Go+ 🚀
+MCP XGo 🚀
 =====
 
 [![Build Status](https://github.com/goplus/mcp/actions/workflows/go.yml/badge.svg)](https://github.com/goplus/mcp/actions/workflows/go.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/goplus/mcp)](https://goreportcard.com/report/github.com/goplus/mcp)
 [![GitHub release](https://img.shields.io/github/v/tag/goplus/mcp.svg?label=release)](https://github.com/goplus/mcp/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/goplus/mcp.svg)](https://pkg.go.dev/github.com/goplus/mcp)
-[![Language](https://img.shields.io/badge/language-Go+-blue.svg)](https://github.com/goplus/gop)
+[![Language](https://img.shields.io/badge/language-XGo-blue.svg)](https://github.com/goplus/gop)
 <!--
 [![Coverage Status](https://codecov.io/gh/goplus/mcp/branch/main/graph/badge.svg)](https://codecov.io/gh/goplus/mcp)
 -->
 
-A Go+ implementation of the Model Context Protocol (MCP), enabling seamless integration between LLM applications and external data sources and tools.
+A XGo implementation of the Model Context Protocol (MCP), enabling seamless integration between LLM applications and external data sources and tools.
 
-This repo contains two [Go+ classfiles](https://github.com/goplus/gop/blob/main/doc/classfile.md). They are [mcp](#mcp-mcp-server-framework) (MCP Server Framework) and [mcptest](#mcptest-mcp-server-test-framework) (MCP Server Test Framework).
+This repo contains two [XGo classfiles](https://github.com/goplus/gop/blob/main/doc/classfile.md). They are [mcp](#mcp-mcp-server-framework) (MCP Server Framework) and [mcptest](#mcptest-mcp-server-test-framework) (MCP Server Test Framework).
 
 The classfile [mcp](#mcp-mcp-server-framework) has the file suffix `_mcp.gox` (the MCP Server), `_res.gox` (a MCP Resource or ResourceTemplate), `_tool.gox` (a MCP Tool) and `_prompt.gox` (a MCP Prompt). The classfile [mcptest](#mcptest-mcp-server-test-framework) has the file suffix `_mtest.gox`.
 

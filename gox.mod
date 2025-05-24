@@ -1,4 +1,4 @@
-gop 1.2
+xgo 1.5
 
 project *_mcp.gox MCPApp github.com/goplus/mcp/server
 

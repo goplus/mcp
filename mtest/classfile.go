@@ -55,7 +55,7 @@ func Dump(args ...any) {
 type MainApp struct {
 }
 
-// Gopt_MainApp_TestMain is required by Go+ compiler as the TestMain entry of a YAP testing project.
+// Gopt_MainApp_TestMain is required by XGo compiler as the TestMain entry of a YAP testing project.
 func Gopt_MainApp_TestMain(app any, m *testing.M) {
 	if me, ok := app.(interface{ MainEntry() }); ok {
 		me.MainEntry()

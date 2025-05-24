@@ -61,7 +61,7 @@ call "compositeObject", {
 	"profile": {
 		"age": 25,
 		"works": [
-			{"company": "Go+ Limited", "start": "2020-5-23"},
+			{"company": "XGo Limited", "start": "2020-5-23"},
 		],
 	},
 }
