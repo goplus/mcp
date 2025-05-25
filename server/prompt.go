@@ -53,7 +53,7 @@ func (p *PromptApp) Gop_Env(name string) string {
 	return p.request.Params.Arguments[name]
 }
 
-// Main is required by Go+ compiler as the entry of a MCPServer prompt.
+// Main is required by XGo compiler as the entry of a MCPServer prompt.
 func (p *PromptApp) Main(ctx context.Context, request mcp.GetPromptRequest, t *PromptAppProto) (string, []mcp.PromptMessage) {
 	if t == nil {
 		p.ctx = ctx

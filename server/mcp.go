@@ -280,7 +280,7 @@ type PromptProto interface {
 	Classclone() PromptProto
 }
 
-// Gopt_MCPApp_Main is required by Go+ compiler as the entry of a MCPServer project.
+// Gopt_MCPApp_Main is required by XGo compiler as the entry of a MCPServer project.
 func Gopt_MCPApp_Main(app iAppProto, resources []ResourceProto, tools []ToolProto, prompts []PromptProto) {
 	app.MainEntry()
 	svr := app.Sys()
