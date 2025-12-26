@@ -3,7 +3,7 @@ module github.com/goplus/mcp
 go 1.23.0
 
 require (
-	github.com/mark3labs/mcp-go v0.43.0
+	github.com/mark3labs/mcp-go v0.43.2
 	github.com/qiniu/x v1.15.3
 	github.com/yosida95/uritemplate/v3 v3.0.2
 )
