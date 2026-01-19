@@ -34,7 +34,7 @@ func (this *case_hello) Main() {
 //line demo/hello/hello_mtest.gox:35:1
 	mtest.Dump(this.Resp())
 //line demo/hello/hello_mtest.gox:36:1
-	test.Gopt_Case_MatchAny(this, map[string][]map[string]string{"content": []map[string]string{map[string]string{"type": "text", "text": "Hello, Ken!"}}}, this.Resp())
+	test.XGot_Case_MatchAny(this, map[string][]map[string]string{"content": []map[string]string{map[string]string{"type": "text", "text": "Hello, Ken!"}}}, this.Resp())
 }
 func Test_hello(t *testing.T) {
 	mtest.Gopt_CaseApp_TestMain(new(case_hello), t)

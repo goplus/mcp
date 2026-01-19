@@ -4,6 +4,7 @@ package main
 
 import (
 	"github.com/goplus/mcp/mtest"
+	"github.com/goplus/mcp/mtest/rtx"
 	"testing"
 )
 
@@ -19,7 +20,7 @@ func (this *case_longrun) Main() {
 //line demo/longruntool/longrun_mtest.gox:4:1
 	this.RetWith(map[string]interface{}{})
 //line demo/longruntool/longrun_mtest.gox:6:1
-	this.OnNotify__0("notifications/progress", func(params map[string]any) {
+	this.OnNotify__0("notifications/progress", func(params rtx.M) {
 //line demo/longruntool/longrun_mtest.gox:7:1
 		mtest.Dump(params)
 	})

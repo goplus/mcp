@@ -53,7 +53,7 @@ func (p *Request) LastErr() error {
 }
 
 const (
-	Gopo_Request_Ret = ".Send,.RetWith"
+	XGoo_Request_Ret = ".Send,.RetWith"
 )
 
 // RetWith checks the response with the given value.
@@ -64,7 +64,7 @@ func (p *Request) RetWith(resp any) *Request {
 	if p.rerr != nil {
 		t.Fatal(p.rerr)
 	}
-	test.Gopt_Case_MatchAny(t, resp, p.resp, "resp")
+	test.XGot_Case_MatchAny(t, resp, p.resp, "resp")
 	return p
 }
 

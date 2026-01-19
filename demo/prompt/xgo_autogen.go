@@ -28,14 +28,14 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Prompt Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	_gop_obj0 := &code_review{MCPApp: this}
-	_gop_obj1 := &greeting{MCPApp: this}
-	_gop_lst2 := []server.PromptProto{_gop_obj0, _gop_obj1}
-	server.Gopt_MCPApp_Main(this, nil, nil, _gop_lst2)
+	_xgo_obj0 := &code_review{MCPApp: this}
+	_xgo_obj1 := &greeting{MCPApp: this}
+	_xgo_lst2 := []server.PromptProto{_xgo_obj0, _xgo_obj1}
+	server.Gopt_MCPApp_Main(this, nil, nil, _xgo_lst2)
 }
 //line demo/prompt/code_review_prompt.gox:1
-func (this *code_review) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
-	this.PromptApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *code_review) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.GetPromptRequest, _xgo_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
+	this.PromptApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/prompt/code_review_prompt.gox:1:1
 	this.Prompt__0("codeReview", func() {
 //line demo/prompt/code_review_prompt.gox:2:1
@@ -59,12 +59,12 @@ func (this *code_review) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPrompt
 	return "Code review assistance", []mcp.PromptMessage{this.Prompt__1(server.RoleUser, server.Text__0("You are a helpful code reviewer. Review the changes and provide constructive feedback.")), this.Prompt__1(server.RoleAssistant, server.Embedded__0(&mcp.TextResourceContents{URI: stringutil.Concat("git://pulls/", prNumber, "/diff"), MIMEType: "text/x-diff", Text: "diff"}))}
 }
 func (this *code_review) Classclone() server.PromptProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 //line demo/prompt/greeting_prompt.gox:1
-func (this *greeting) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptRequest, _gop_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
-	this.PromptApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *greeting) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.GetPromptRequest, _xgo_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
+	this.PromptApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/prompt/greeting_prompt.gox:1:1
 	this.Prompt__0("greeting", func() {
 //line demo/prompt/greeting_prompt.gox:2:1
@@ -86,8 +86,8 @@ func (this *greeting) Main(_gop_arg0 context.Context, _gop_arg1 mcp.GetPromptReq
 	return "A friendly greeting", []mcp.PromptMessage{this.Prompt__1(server.RoleAssistant, server.Text__0(stringutil.Concat("Hello, ", name, "! How can I help you today?")))}
 }
 func (this *greeting) Classclone() server.PromptProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 func main() {
 	new(MCPApp).Main()
