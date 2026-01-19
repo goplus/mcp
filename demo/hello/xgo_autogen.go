@@ -24,13 +24,13 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Tool Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	_gop_obj0 := &hello{MCPApp: this}
-	_gop_lst1 := []server.ToolProto{_gop_obj0}
-	server.Gopt_MCPApp_Main(this, nil, _gop_lst1, nil)
+	_xgo_obj0 := &hello{MCPApp: this}
+	_xgo_lst1 := []server.ToolProto{_xgo_obj0}
+	server.Gopt_MCPApp_Main(this, nil, _xgo_lst1, nil)
 }
 //line demo/hello/hello_tool.gox:1
-func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *hello) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest, _xgo_arg2 *server.ToolAppProto) mcp.Content {
+	this.ToolApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/hello/hello_tool.gox:1:1
 	this.Tool("helloWorld", func() {
 //line demo/hello/hello_tool.gox:2:1
@@ -54,8 +54,8 @@ func (this *hello) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest
 	return server.Text__0(stringutil.Concat("Hello, ", name, "!"))
 }
 func (this *hello) Classclone() server.ToolProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 func main() {
 	new(MCPApp).Main()

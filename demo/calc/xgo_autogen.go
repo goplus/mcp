@@ -26,13 +26,13 @@ func (this *MCPApp) MainEntry() {
 	this.Run("sse://:8080")
 }
 func (this *MCPApp) Main() {
-	_gop_obj0 := &calc{MCPApp: this}
-	_gop_lst1 := []server.ToolProto{_gop_obj0}
-	server.Gopt_MCPApp_Main(this, nil, _gop_lst1, nil)
+	_xgo_obj0 := &calc{MCPApp: this}
+	_xgo_lst1 := []server.ToolProto{_xgo_obj0}
+	server.Gopt_MCPApp_Main(this, nil, _xgo_lst1, nil)
 }
 //line demo/calc/calc_tool.gox:1
-func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *calc) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest, _xgo_arg2 *server.ToolAppProto) mcp.Content {
+	this.ToolApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/calc/calc_tool.gox:1:1
 	this.Tool("calculate", func() {
 //line demo/calc/calc_tool.gox:2:1
@@ -97,8 +97,8 @@ func (this *calc) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest,
 	}
 }
 func (this *calc) Classclone() server.ToolProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 func main() {
 	new(MCPApp).Main()

@@ -29,14 +29,14 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Resource Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	_gop_obj0 := &readme{MCPApp: this}
-	_gop_obj1 := &user_profile{MCPApp: this}
-	_gop_lst0 := []server.ResourceProto{_gop_obj0, _gop_obj1}
-	server.Gopt_MCPApp_Main(this, _gop_lst0, nil, nil)
+	_xgo_obj0 := &readme{MCPApp: this}
+	_xgo_obj1 := &user_profile{MCPApp: this}
+	_xgo_lst0 := []server.ResourceProto{_xgo_obj0, _xgo_obj1}
+	server.Gopt_MCPApp_Main(this, _xgo_lst0, nil, nil)
 }
 //line demo/resource/readme_res.gox:5
-func (this *readme) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadResourceRequest, _gop_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
-	this.ResourceApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *readme) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.ReadResourceRequest, _xgo_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
+	this.ResourceApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/resource/readme_res.gox:5:1
 	this.Resource("docs://readme", "Project README", func() {
 //line demo/resource/readme_res.gox:6:1
@@ -45,17 +45,17 @@ func (this *readme) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadResourceRe
 		this.MimeType("text/markdown")
 	})
 //line demo/resource/readme_res.gox:10:1
-	data := func() (_gop_ret []byte) {
+	data := func() (_xgo_ret []byte) {
 //line demo/resource/readme_res.gox:10:1
-		var _gop_err error
+		var _xgo_err error
 //line demo/resource/readme_res.gox:10:1
-		_gop_ret, _gop_err = os.ReadFile("README.md")
+		_xgo_ret, _xgo_err = os.ReadFile("README.md")
 //line demo/resource/readme_res.gox:10:1
-		if _gop_err != nil {
+		if _xgo_err != nil {
 //line demo/resource/readme_res.gox:10:1
-			_gop_err = errors.NewFrame(_gop_err, "os.readFile(\"README.md\")", "demo/resource/readme_res.gox", 10, "main.Main")
+			_xgo_err = errors.NewFrame(_xgo_err, "os.readFile(\"README.md\")", "demo/resource/readme_res.gox", 10, "main.Main")
 //line demo/resource/readme_res.gox:10:1
-			panic(_gop_err)
+			panic(_xgo_err)
 		}
 //line demo/resource/readme_res.gox:10:1
 		return
@@ -64,8 +64,8 @@ func (this *readme) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadResourceRe
 	return []mcp.ResourceContents{server.Content__3(&server.TextResourceByteContents{URI: "docs://readme", MIMEType: "text/markdown", Text: data})}
 }
 func (this *readme) Classclone() server.ResourceProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 //line demo/resource/user_profile_res.gox:3:1
 // Your DB/API call here
@@ -74,8 +74,8 @@ func (this *user_profile) getUserProfile(userID string) (interface{}, error) {
 	return map[string]interface{}{"name": "Ken", "age": 15, "id": userID}, nil
 }
 //line demo/resource/user_profile_res.gox:10
-func (this *user_profile) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadResourceRequest, _gop_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
-	this.ResourceApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *user_profile) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.ReadResourceRequest, _xgo_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
+	this.ResourceApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/resource/user_profile_res.gox:10:1
 	this.Resource("users://{id}/profile", "User Profile", func() {
 //line demo/resource/user_profile_res.gox:11:1
@@ -91,17 +91,17 @@ func (this *user_profile) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadReso
 		panic("user id is required")
 	}
 //line demo/resource/user_profile_res.gox:20:1
-	profile := func() (_gop_ret interface{}) {
+	profile := func() (_xgo_ret interface{}) {
 //line demo/resource/user_profile_res.gox:20:1
-		var _gop_err error
+		var _xgo_err error
 //line demo/resource/user_profile_res.gox:20:1
-		_gop_ret, _gop_err = this.getUserProfile(userID)
+		_xgo_ret, _xgo_err = this.getUserProfile(userID)
 //line demo/resource/user_profile_res.gox:20:1
-		if _gop_err != nil {
+		if _xgo_err != nil {
 //line demo/resource/user_profile_res.gox:20:1
-			_gop_err = errors.NewFrame(_gop_err, "getUserProfile(userID)", "demo/resource/user_profile_res.gox", 20, "main.Main")
+			_xgo_err = errors.NewFrame(_xgo_err, "getUserProfile(userID)", "demo/resource/user_profile_res.gox", 20, "main.Main")
 //line demo/resource/user_profile_res.gox:20:1
-			panic(_gop_err)
+			panic(_xgo_err)
 		}
 //line demo/resource/user_profile_res.gox:20:1
 		return
@@ -110,8 +110,8 @@ func (this *user_profile) Main(_gop_arg0 context.Context, _gop_arg1 mcp.ReadReso
 	return []mcp.ResourceContents{server.Content__2(&server.JsonResourceContents{URI: this.RequestURI(), JSON: profile})}
 }
 func (this *user_profile) Classclone() server.ResourceProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 func main() {
 	new(MCPApp).Main()
