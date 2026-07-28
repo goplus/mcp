@@ -180,8 +180,8 @@ type iCaseProto interface {
 	Main()
 }
 
-// Gopt_CaseApp_TestMain is required by XGo compiler as the entry of a YAP test case.
-func Gopt_CaseApp_TestMain(c iCaseProto, t *testing.T) {
+// XGot_CaseApp_TestMain is required by XGo compiler as the entry of a YAP test case.
+func XGot_CaseApp_TestMain(c iCaseProto, t *testing.T) {
 	app := new(App).initApp()
 	c.initCaseApp(app, test.NewT(t))
 	c.Main()

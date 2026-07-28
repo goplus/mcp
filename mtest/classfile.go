@@ -31,8 +31,8 @@ import (
 )
 
 const (
-	GopPackage   = "github.com/qiniu/x/test"
-	GopTestClass = true
+	XGoPackage   = "github.com/qiniu/x/test"
+	XGoTestClass = true
 )
 
 // Dump prints the arguments in a formatted JSON style.
@@ -55,8 +55,8 @@ func Dump(args ...any) {
 type MainApp struct {
 }
 
-// Gopt_MainApp_TestMain is required by XGo compiler as the TestMain entry of a YAP testing project.
-func Gopt_MainApp_TestMain(app any, m *testing.M) {
+// XGot_MainApp_TestMain is required by XGo compiler as the TestMain entry of a YAP testing project.
+func XGot_MainApp_TestMain(app any, m *testing.M) {
 	if me, ok := app.(interface{ MainEntry() }); ok {
 		me.MainEntry()
 	}

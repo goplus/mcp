@@ -31,7 +31,7 @@ func (this *MCPApp) Main() {
 	_xgo_obj0 := &code_review{MCPApp: this}
 	_xgo_obj1 := &greeting{MCPApp: this}
 	_xgo_lst2 := []server.PromptProto{_xgo_obj0, _xgo_obj1}
-	server.Gopt_MCPApp_Main(this, nil, nil, _xgo_lst2)
+	server.XGot_MCPApp_Main(this, nil, nil, _xgo_lst2)
 }
 //line demo/prompt/code_review_prompt.gox:1
 func (this *code_review) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.GetPromptRequest, _xgo_arg2 *server.PromptAppProto) (string, []mcp.PromptMessage) {
@@ -49,7 +49,7 @@ func (this *code_review) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.GetPrompt
 		})
 	})
 //line demo/prompt/code_review_prompt.gox:9:1
-	prNumber := this.Gop_Env("prNumber")
+	prNumber := this.XGo_Env("prNumber")
 //line demo/prompt/code_review_prompt.gox:10:1
 	if prNumber == "" {
 //line demo/prompt/code_review_prompt.gox:11:1
@@ -76,7 +76,7 @@ func (this *greeting) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.GetPromptReq
 		})
 	})
 //line demo/prompt/greeting_prompt.gox:8:1
-	name := this.Gop_Env("name")
+	name := this.XGo_Env("name")
 //line demo/prompt/greeting_prompt.gox:9:1
 	if name == "" {
 //line demo/prompt/greeting_prompt.gox:10:1

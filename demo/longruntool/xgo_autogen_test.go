@@ -34,5 +34,5 @@ func (this *case_longrun) Main() {
 	this.RetWith(map[string][]map[string]string{"content": []map[string]string{map[string]string{"text": "Long running operation completed. Duration: 1 seconds, Steps: 5.", "type": "text"}}})
 }
 func Test_longrun(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_longrun), t)
+	mtest.XGot_CaseApp_TestMain(new(case_longrun), t)
 }

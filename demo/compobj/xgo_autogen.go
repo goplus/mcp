@@ -23,13 +23,13 @@ func (this *MCPApp) MainEntry() {
 	this.Server("Composite Object Demo 🚀", "1.0.0")
 }
 func (this *MCPApp) Main() {
-	_gop_obj0 := &compobj{MCPApp: this}
-	_gop_lst1 := []server.ToolProto{_gop_obj0}
-	server.Gopt_MCPApp_Main(this, nil, _gop_lst1, nil)
+	_xgo_obj0 := &compobj{MCPApp: this}
+	_xgo_lst1 := []server.ToolProto{_xgo_obj0}
+	server.XGot_MCPApp_Main(this, nil, _xgo_lst1, nil)
 }
 //line demo/compobj/compobj_tool.gox:1
-func (this *compobj) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolRequest, _gop_arg2 *server.ToolAppProto) mcp.Content {
-	this.ToolApp.Main(_gop_arg0, _gop_arg1, _gop_arg2)
+func (this *compobj) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest, _xgo_arg2 *server.ToolAppProto) mcp.Content {
+	this.ToolApp.Main(_xgo_arg0, _xgo_arg1, _xgo_arg2)
 //line demo/compobj/compobj_tool.gox:1:1
 	this.Tool("compositeObject", func() {
 //line demo/compobj/compobj_tool.gox:2:1
@@ -79,14 +79,14 @@ func (this *compobj) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolReque
 		})
 	})
 //line demo/compobj/compobj_tool.gox:30:1
-	name, ok := this.Gop_Env("name").(string)
+	name, ok := this.XGo_Env("name").(string)
 //line demo/compobj/compobj_tool.gox:31:1
 	if !ok {
 //line demo/compobj/compobj_tool.gox:32:1
 		panic("name must be a string")
 	}
 //line demo/compobj/compobj_tool.gox:35:1
-	profile, ok := this.Gop_Env("profile").(map[string]interface{})
+	profile, ok := this.XGo_Env("profile").(map[string]interface{})
 //line demo/compobj/compobj_tool.gox:36:1
 	if !ok {
 //line demo/compobj/compobj_tool.gox:37:1
@@ -96,8 +96,8 @@ func (this *compobj) Main(_gop_arg0 context.Context, _gop_arg1 mcp.CallToolReque
 	return server.Text__1(server.JsonContent{JSON: map[string]interface{}{"name": name, "profile": profile}})
 }
 func (this *compobj) Classclone() server.ToolProto {
-	_gop_ret := *this
-	return &_gop_ret
+	_xgo_ret := *this
+	return &_xgo_ret
 }
 func main() {
 	new(MCPApp).Main()

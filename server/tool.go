@@ -58,8 +58,8 @@ func (p *ToolApp) MetaProgressToken() mcp.ProgressToken {
 	return nil
 }
 
-// Gop_Env returns the value of the specified parameter.
-func (p *ToolApp) Gop_Env(name string) any {
+// XGo_Env returns the value of the specified parameter.
+func (p *ToolApp) XGo_Env(name string) any {
 	return p.args[name]
 }
 
