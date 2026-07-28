@@ -30,5 +30,5 @@ func (this *case_user_profile) Main() {
 	this.RetWith(map[string][]map[string]string{"contents": []map[string]string{map[string]string{"mimeType": "application/json", "text": `{"age":15,"id":"123","name":"Ken"}`, "uri": "users://123/profile"}}})
 }
 func Test_user_profile(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_user_profile), t)
+	mtest.XGot_CaseApp_TestMain(new(case_user_profile), t)
 }

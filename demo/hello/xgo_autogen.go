@@ -26,7 +26,7 @@ func (this *MCPApp) MainEntry() {
 func (this *MCPApp) Main() {
 	_xgo_obj0 := &hello{MCPApp: this}
 	_xgo_lst1 := []server.ToolProto{_xgo_obj0}
-	server.Gopt_MCPApp_Main(this, nil, _xgo_lst1, nil)
+	server.XGot_MCPApp_Main(this, nil, _xgo_lst1, nil)
 }
 //line demo/hello/hello_tool.gox:1
 func (this *hello) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest, _xgo_arg2 *server.ToolAppProto) mcp.Content {
@@ -44,7 +44,7 @@ func (this *hello) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest
 		})
 	})
 //line demo/hello/hello_tool.gox:9:1
-	name, ok := this.Gop_Env("name").(string)
+	name, ok := this.XGo_Env("name").(string)
 //line demo/hello/hello_tool.gox:10:1
 	if !ok {
 //line demo/hello/hello_tool.gox:11:1

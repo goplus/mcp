@@ -28,7 +28,7 @@ func (this *MCPApp) MainEntry() {
 func (this *MCPApp) Main() {
 	_xgo_obj0 := &calc{MCPApp: this}
 	_xgo_lst1 := []server.ToolProto{_xgo_obj0}
-	server.Gopt_MCPApp_Main(this, nil, _xgo_lst1, nil)
+	server.XGot_MCPApp_Main(this, nil, _xgo_lst1, nil)
 }
 //line demo/calc/calc_tool.gox:1
 func (this *calc) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest, _xgo_arg2 *server.ToolAppProto) mcp.Content {
@@ -62,11 +62,11 @@ func (this *calc) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest,
 		})
 	})
 //line demo/calc/calc_tool.gox:18:1
-	op := this.Gop_Env("operation").(string)
+	op := this.XGo_Env("operation").(string)
 //line demo/calc/calc_tool.gox:19:1
-	x := this.Gop_Env("x").(float64)
+	x := this.XGo_Env("x").(float64)
 //line demo/calc/calc_tool.gox:20:1
-	y := this.Gop_Env("y").(float64)
+	y := this.XGo_Env("y").(float64)
 //line demo/calc/calc_tool.gox:22:1
 	switch op {
 //line demo/calc/calc_tool.gox:23:1

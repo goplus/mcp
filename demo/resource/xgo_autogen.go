@@ -32,7 +32,7 @@ func (this *MCPApp) Main() {
 	_xgo_obj0 := &readme{MCPApp: this}
 	_xgo_obj1 := &user_profile{MCPApp: this}
 	_xgo_lst0 := []server.ResourceProto{_xgo_obj0, _xgo_obj1}
-	server.Gopt_MCPApp_Main(this, _xgo_lst0, nil, nil)
+	server.XGot_MCPApp_Main(this, _xgo_lst0, nil, nil)
 }
 //line demo/resource/readme_res.gox:5
 func (this *readme) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.ReadResourceRequest, _xgo_arg2 *server.ResourceAppProto) []mcp.ResourceContents {
@@ -84,7 +84,7 @@ func (this *user_profile) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.ReadReso
 		this.MimeType("application/json")
 	})
 //line demo/resource/user_profile_res.gox:15:1
-	userID, ok := this.Gop_Env("id").(string)
+	userID, ok := this.XGo_Env("id").(string)
 //line demo/resource/user_profile_res.gox:16:1
 	if !ok {
 //line demo/resource/user_profile_res.gox:17:1

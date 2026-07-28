@@ -28,7 +28,7 @@ func (this *MCPApp) MainEntry() {
 func (this *MCPApp) Main() {
 	_xgo_obj0 := &longrun{MCPApp: this}
 	_xgo_lst1 := []server.ToolProto{_xgo_obj0}
-	server.Gopt_MCPApp_Main(this, nil, _xgo_lst1, nil)
+	server.XGot_MCPApp_Main(this, nil, _xgo_lst1, nil)
 }
 //line demo/longruntool/longrun_tool.gox:3
 func (this *longrun) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolRequest, _xgo_arg2 *server.ToolAppProto) mcp.Content {
@@ -55,14 +55,14 @@ func (this *longrun) Main(_xgo_arg0 context.Context, _xgo_arg1 mcp.CallToolReque
 //line demo/longruntool/longrun_tool.gox:15:1
 	progressToken := this.MetaProgressToken()
 //line demo/longruntool/longrun_tool.gox:17:1
-	duration, ok := this.Gop_Env("duration").(float64)
+	duration, ok := this.XGo_Env("duration").(float64)
 //line demo/longruntool/longrun_tool.gox:18:1
 	if !ok {
 //line demo/longruntool/longrun_tool.gox:19:1
 		duration = 10
 	}
 //line demo/longruntool/longrun_tool.gox:22:1
-	steps, ok := this.Gop_Env("steps").(float64)
+	steps, ok := this.XGo_Env("steps").(float64)
 //line demo/longruntool/longrun_tool.gox:23:1
 	if !ok {
 //line demo/longruntool/longrun_tool.gox:24:1

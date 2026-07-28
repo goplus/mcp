@@ -48,8 +48,8 @@ func (p *ResourceApp) RequestURI() string {
 	return p.request.Params.URI
 }
 
-// Gop_Env returns the value of the specified parameter.
-func (p *ResourceApp) Gop_Env(name string) any {
+// XGo_Env returns the value of the specified parameter.
+func (p *ResourceApp) XGo_Env(name string) any {
 	if p.hasTempl {
 		if p.values == nil {
 			p.values = p.template.URITemplate.Match(p.request.Params.URI)

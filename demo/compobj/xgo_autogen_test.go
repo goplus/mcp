@@ -30,5 +30,5 @@ func (this *case_compobj) Main() {
 	mtest.Dump(this.Resp())
 }
 func Test_compobj(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_compobj), t)
+	mtest.XGot_CaseApp_TestMain(new(case_compobj), t)
 }

@@ -48,8 +48,8 @@ type PromptApp struct {
 	isClone bool
 }
 
-// Gop_Env returns the value of the specified parameter.
-func (p *PromptApp) Gop_Env(name string) string {
+// XGo_Env returns the value of the specified parameter.
+func (p *PromptApp) XGo_Env(name string) string {
 	return p.request.Params.Arguments[name]
 }
 

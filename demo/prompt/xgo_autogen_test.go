@@ -40,8 +40,8 @@ func (this *case_greeting) Main() {
 	this.RetWith(map[string]interface{}{"description": "A friendly greeting", "messages": []map[string]interface{}{map[string]interface{}{"content": map[string]string{"text": "Hello, Ken! How can I help you today?", "type": "text"}, "role": "assistant"}}})
 }
 func Test_code_review(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_code_review), t)
+	mtest.XGot_CaseApp_TestMain(new(case_code_review), t)
 }
 func Test_greeting(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_greeting), t)
+	mtest.XGot_CaseApp_TestMain(new(case_greeting), t)
 }

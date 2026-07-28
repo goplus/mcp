@@ -32,5 +32,5 @@ func (this *case_calc) Main() {
 	this.RetWith(map[string]interface{}{"content": []map[string]string{map[string]string{"text": "cannot divide by zero", "type": "text"}}, "isError": true})
 }
 func Test_calc(t *testing.T) {
-	mtest.Gopt_CaseApp_TestMain(new(case_calc), t)
+	mtest.XGot_CaseApp_TestMain(new(case_calc), t)
 }
