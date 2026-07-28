@@ -4,14 +4,14 @@ MCP XGo 🚀
 [![Build Status](https://github.com/goplus/mcp/actions/workflows/go.yml/badge.svg)](https://github.com/goplus/mcp/actions/workflows/go.yml)
 [![GitHub release](https://img.shields.io/github/v/tag/goplus/mcp.svg?label=release)](https://github.com/goplus/mcp/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/goplus/mcp.svg)](https://pkg.go.dev/github.com/goplus/mcp)
-[![Language](https://img.shields.io/badge/language-XGo-blue.svg)](https://github.com/goplus/gop)
+[![Language](https://img.shields.io/badge/language-XGo-blue.svg)](https://github.com/goplus/xgo)
 <!--
 [![Coverage Status](https://codecov.io/gh/goplus/mcp/branch/main/graph/badge.svg)](https://codecov.io/gh/goplus/mcp)
 -->
 
 A XGo implementation of the Model Context Protocol (MCP), enabling seamless integration between LLM applications and external data sources and tools.
 
-This repo contains two [XGo classfiles](https://github.com/goplus/gop/blob/main/doc/classfile.md). They are [mcp](#mcp-mcp-server-framework) (MCP Server Framework) and [mcptest](#mcptest-mcp-server-test-framework) (MCP Server Test Framework).
+This repo contains two [XGo classfiles](https://github.com/goplus/xgo/blob/main/doc/classfile.md). They are [mcp](#mcp-mcp-server-framework) (MCP Server Framework) and [mcptest](#mcptest-mcp-server-test-framework) (MCP Server Test Framework).
 
 The classfile [mcp](#mcp-mcp-server-framework) has the file suffix `_mcp.gox` (the MCP Server), `_res.gox` (a MCP Resource or ResourceTemplate), `_tool.gox` (a MCP Tool) and `_prompt.gox` (a MCP Prompt). The classfile [mcptest](#mcptest-mcp-server-test-framework) has the file suffix `_mtest.gox`.
 
@@ -24,13 +24,13 @@ Here is a MCP Server example ([source code](demo/hello)). It has two files: `mai
 First let us initialize a hello project:
 
 ```
-gop mod init hello
+xgo mod init hello
 ```
 
 Then we have it reference the [mcp](https://pkg.go.dev/github.com/goplus/mcp) classfile:
 
 ```
-gop get github.com/goplus/mcp@latest
+xgo get github.com/goplus/mcp@latest
 ```
 
 The content of `main_mcp.gox` (the MCP Server) is as follows
@@ -61,8 +61,8 @@ return text("Hello, ${name}!")
 Execute the following commands:
 
 ```
-gop mod tidy
-gop run .
+xgo mod tidy
+xgo run .
 ```
 
 A simplest MCP Server is running now.
@@ -83,4 +83,4 @@ ret {
 }
 ```
 
-Then run `gop test` or `gop test -v` to execute the unit test.
+Then run `xgo test` or `xgo test -v` to execute the unit test.
