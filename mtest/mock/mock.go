@@ -42,7 +42,7 @@ func (p *Transport) NotificationChannel() chan<- mcp.JSONRPCNotification {
 }
 
 func (p *Transport) SessionID() string {
-	panic("unreachable")
+	return "mock"
 }
 
 // -----------------------------------------------------------------------------
