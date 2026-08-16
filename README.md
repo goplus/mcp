@@ -4,7 +4,7 @@ MCP XGo 🚀
 [![Build Status](https://github.com/goplus/mcp/actions/workflows/go.yml/badge.svg)](https://github.com/goplus/mcp/actions/workflows/go.yml)
 [![GitHub release](https://img.shields.io/github/v/tag/goplus/mcp.svg?label=release)](https://github.com/goplus/mcp/releases)
 [![GoDoc](https://pkg.go.dev/badge/github.com/goplus/mcp.svg)](https://pkg.go.dev/github.com/goplus/mcp)
-[![Language](https://img.shields.io/badge/language-XGo-blue.svg)](https://github.com/goplus/xgo)
+[![XGo](https://img.shields.io/badge/project-XGo-blue.svg)](https://github.com/goplus/xgo)
 <!--
 [![Coverage Status](https://codecov.io/gh/goplus/mcp/branch/main/graph/badge.svg)](https://codecov.io/gh/goplus/mcp)
 -->
